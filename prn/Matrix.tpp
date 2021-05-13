@@ -119,3 +119,15 @@ std::ostream &operator<<(std::ostream &cout, const Matrix<T, dimN, dimM> &M){
     }
     return cout;
 }
+
+template <typename T, std::size_t dimN, std::size_t dimM>
+Matrix<T, dimN, dimM> &Matrix<T, dimN, dimM>::operator=(const Matrix<T, dimN, dimM> &M){
+    std::size_t i = -1;
+    for(auto &x: this->vector){
+        for(std::size_t j = 0; j < dimM; ++j){
+            x[j] = M[++i][j];
+        }
+    }
+       
+    return *this;
+}

@@ -51,11 +51,15 @@ void Object::Translate(const Vector3 &v) {
 }
 
 void Object::Rotate(const double &angle, const std::size_t &times, const Vector3 &v) {
-    Quaternion q(v, angle);
-    std::size_t t = 0;
-    for (; t < times; ++t)
+    // Quaternion q(v, angle);
+    // for (std::size_t t = 0; t < times; ++t)
+    //     for(auto &x: this->points)
+    //         x = q*x;
+    MatrixRot rotM(angle, v);
+    for (std::size_t t = 0; t < times; ++t)
         for(auto &x: this->points)
-            x *= q;
+            x = rotM * x ;
+    
 }
 
 std::istream &operator>>(std::istream &strm, Object &object){

@@ -74,10 +74,15 @@ public:
      * @return Matrix result. 
      */
     Matrix<T, dimN, dimN> operator*(const Matrix<T, dimM, dimN> &M) const;
+
+    /**
+     * @brief Copy values from M to this
+     * @param M copied values
+     * @return Matrix& 
+     */
+    Matrix &operator=(const Matrix &M);
 };
 
-typedef Matrix<double, 3, 3> Matrix3x3;
-typedef Matrix<double, 2, 2> Matrix2x2;
 
 /**
  * @brief Input stream operator

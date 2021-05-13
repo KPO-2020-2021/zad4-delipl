@@ -1,7 +1,7 @@
 #ifndef __OBJECT_HPP__
 #define __OBJECT_HPP__
-#include "Matrix.hpp"
-#include "Quaternion.hpp"
+#include "Matrix3x3.hpp"
+// #include "Quaternion.hpp"
 #include <iostream>
 #include <string>
 #include <vector>

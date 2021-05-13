@@ -28,7 +28,7 @@ TEST_CASE("2. Object constriuctor, open file and read data"){
 
 TEST_CASE("4. Object 8 points "){
     CHECK_NOTHROW(Object rect("prostopadloscian.dat", 8));
-    Object rect("prostopadloscian.dat", 8);
+    Object rect("prostokat.dat", 4);
 
     rect.Rotate(90, 1, VectorZ);
     CHECK(rect[0] == Vector3({-60,60,60}));
