@@ -9,8 +9,6 @@ Quaternion::Quaternion(const Vector3 &v, double angle){
     this->im = this->im / this->im.Length();
 }
 
-
-
 Vector3 Quaternion::operator*(const Vector3 &v) const{
     return  v * this->im;
 }
