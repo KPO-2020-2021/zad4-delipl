@@ -9,7 +9,7 @@ Menu::Menu(std::initializer_list<std::pair<std::string, std::function<void(void)
 
 
 std::ostream &operator<<(std::ostream &cout, const Menu &menu){
-    std::size_t i = -1;
+    std::size_t i = 0;
     cout << std::endl;
     for(auto &optionName: menu.options)
         cout << ++i << ". " << optionName.first << std::endl; 

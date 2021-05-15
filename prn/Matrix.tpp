@@ -109,6 +109,16 @@ Matrix<T, dimN, dimN> Matrix<T, dimN, dimM>::operator*(const Matrix<T, dimM, dim
 }
 
 template <typename T, std::size_t dimN, std::size_t dimM>
+Matrix<T, dimN, dimN> &Matrix<T, dimN, dimM>::operator*=(const Matrix<T, dimM, dimN> &M){
+    Matrix<T, dimN, dimM> flippedMatrix = M.Flip();
+    for(std::size_t i = 0; i < dimN; ++i)
+        for(std::size_t j = 0; j < dimN; ++j)
+            (*this) [i][j] = ((*this)[i] & flippedMatrix[j]);
+    
+    return (*this);
+}
+
+template <typename T, std::size_t dimN, std::size_t dimM>
 std::ostream &operator<<(std::ostream &cout, const Matrix<T, dimN, dimM> &M){
     for (std::size_t i = 0; i < dimN; ++i){
         cout << "| ";

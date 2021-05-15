@@ -7,7 +7,7 @@ Scene::Scene(){
     this->_Ymax =  10  * WINDOW_SCALE;
     this->_Ymin = -10  * WINDOW_SCALE;
     this->_Zmax =  10  * WINDOW_SCALE;
-    this->_Zmin =  0 * WINDOW_SCALE;
+    this->_Zmin =  -10 * WINDOW_SCALE;
     this->ZmienTrybRys(PzG::TR_3D);
     this->Inicjalizuj();
 

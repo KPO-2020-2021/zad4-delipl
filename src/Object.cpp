@@ -40,7 +40,7 @@ void Object::Save(){
     std::ofstream tmpFile(TMP_FOLDER + this->Name());
     if(tmpFile)
         tmpFile << *this;
-    tmpFile << (*this)[0];
+    // tmpFile << (*this)[0];
     tmpFile.close();
 }
 
@@ -51,10 +51,6 @@ void Object::Translate(const Vector3 &v) {
 }
 
 void Object::Rotate(const double &angle, const std::size_t &times, const Vector3 &v) {
-    // Quaternion q(v, angle);
-    // for (std::size_t t = 0; t < times; ++t)
-    //     for(auto &x: this->points)
-    //         x = q*x;
     MatrixRot rotM(angle, v);
     for (std::size_t t = 0; t < times; ++t)
         for(auto &x: this->points)
@@ -63,7 +59,14 @@ void Object::Rotate(const double &angle, const std::size_t &times, const Vector3
 }
 
 std::istream &operator>>(std::istream &strm, Object &object){
+    char c = ' ';
     for(std::size_t i = 0; i < object.CountPoints(); ++i){
+        c = ' ';
+        strm >> c;
+        if(c == '#')
+            strm.ignore(std::numeric_limits<int>().max(), '\n');
+        else
+            strm.putback(c);
         strm >> object[i];
         if(!strm)
             throw std::logic_error("Cannot read Object!");
@@ -76,13 +79,16 @@ std::istream &operator>>(std::istream &strm, Object &object){
 
 
 std::ostream &operator<<(std::ostream &strm, const Object &object){
+    int k = 1;
     for(std::size_t i = 0; i < object.CountPoints(); ++i){
-         for(std::size_t j = 0; j < 3; ++j)
+        for(std::size_t j = 0; j < 3; ++j)
             object[i][j] = object[i][j] / object.transform.scale[j];
 
         strm << object[i] << std::endl;
+        if(k % 4 == 0) strm << "#\n\n";
         if(!strm)
             throw std::logic_error("Cannot read Object!");
+        ++k;
     }
     return strm;
 }

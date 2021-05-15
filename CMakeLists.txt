@@ -35,38 +35,6 @@ include(Warnings)
 find_lto(CXX)
 
 # --------------------------------------------------------------------------------
-#                          Compile Geometric Libraries 
-# --------------------------------------------------------------------------------
-# add_library(VEC ./inc/Vector3.hpp ./src/Vector3.cpp)
-# target_include_directories(VEC PUBLIC ./inc ./src)
-
-# add_library(MAT ./inc/Matrix3x3.hpp ./src/Matrix3x3.cpp)
-# target_link_libraries(MAT VEC)
-# target_include_directories(MAT PUBLIC ./inc ./src)
-
-# add_library(GNU ./inc/GnuPlotApi.hpp ./src/GnuPlotApi.cpp)
-# target_include_directories(GNU PUBLIC ./inc)
-
-# add_library(MENU ./inc/Menu.hpp ./src/Menu.cpp)
-# target_include_directories(MENU PUBLIC ./inc)
-
-# add_library(QUAT ./inc/quaternion.hpp ./src/quaternion.cpp)
-# target_link_libraries(QUAT VEC)
-# target_include_directories(QUAT PUBLIC ./inc )
-
-# add_library(OBJ ./src/Object.cpp)
-# target_link_libraries(OBJ VEC QUAT)
-# target_include_directories(OBJ PUBLIC ./inc)
-
-# add_library(RIGID ./src/RigidBody.cpp)
-# target_link_libraries(RIGID OBJ)
-# target_include_directories(RIGID PUBLIC ./inc)
-
-# add_library(SCENE ./src/Scene.cpp)
-# target_link_libraries(SCENE GNU RIGID)
-# target_include_directories(SCENE PUBLIC ./inc)
-
-# --------------------------------------------------------------------------------
 #                         Locate files (change as needed).
 # --------------------------------------------------------------------------------
 file(GLOB SOURCES ./src/*.cpp) # All .cpp files in src/
@@ -89,7 +57,7 @@ target_include_directories(SOURCES_LIB PRIVATE ./inc ./prn)
 add_executable(main app/main.cpp)   # Name of exec. and location of file.
 
 target_include_directories(main PRIVATE ./inc ./prn)
-target_link_libraries(main PUBLIC ${SOURCES_LIB})
+target_link_libraries(main PUBLIC SOURCES_LIB)
 
 target_set_warnings(main ENABLE ALL AS_ERROR ALL DISABLE Annoying) # Set warnings (if needed).
 target_enable_lto(main optimized)  # enable link-time-optimization if available for non-debug configurations
@@ -128,12 +96,8 @@ set_target_properties(
     CXX_STANDARD_REQUIRED YES 
     CXX_EXTENSIONS NO
 )
-# set_target_properties(
-#     softBody softBody 
-#     PROPERTIES 
-#     CXX_STANDARD 17 
-#     CXX_STANDARD_REQUIRED YES 
-#     CXX_EXTENSIONS NO
-# )
 
-
+# verbose full described tests (make fulltest)
+add_custom_target(app
+   main
+    WORKING_DIRECTORY  ${PROJECT_SOURCE_DIR})

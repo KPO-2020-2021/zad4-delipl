@@ -47,6 +47,20 @@ TEST_CASE("4. Matrix * Vector"){
     Vector2 u = M*v;
     CHECK(u[0] == 3);
     CHECK(u[1] == 1);
+
+
+    Matrix3x3 N({
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    });
+
+    Vector3 d({11, 12, 13});
+
+    Vector3 z= N*d;    
+    CHECK(z[0] == 74);
+    CHECK(z[1] == 182);
+    CHECK(z[2] == 290);
 }
 TEST_CASE("5. Matrix operator [] take row"){
     Matrix2x2 M({{5, 3},

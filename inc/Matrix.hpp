@@ -76,6 +76,13 @@ public:
     Matrix<T, dimN, dimN> operator*(const Matrix<T, dimM, dimN> &M) const;
 
     /**
+     * @brief Multiplar operator Matrix by Matrux.
+     * @param M matrix.
+     * @return Matrix result. 
+     */
+    Matrix<T, dimN, dimN> &operator*=(const Matrix<T, dimM, dimN> &M);
+
+    /**
      * @brief Copy values from M to this
      * @param M copied values
      * @return Matrix& 
