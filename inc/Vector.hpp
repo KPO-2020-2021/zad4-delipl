@@ -5,6 +5,8 @@
 #include <iostream>
 /**
  * @brief Dynamic any type Vector class.
+ * @tparam T type of Vector
+ * @tparam dim how many dimention is in the Vector
  */
 template <typename T, std::size_t dim>
 class Vector{
@@ -34,7 +36,7 @@ public:
 
     /**
      * @brief Count length of Vector
-    * @return T length of vector
+     * @return T length of vector
     */
     T Length() const;
 

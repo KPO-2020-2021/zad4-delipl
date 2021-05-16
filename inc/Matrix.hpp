@@ -1,6 +1,9 @@
 #ifndef __MATRIX_H__
 #define __MATRIX_H__
 #include "Vector.hpp"
+/**
+ * @file Describing template Matrix class 
+ */
 
 /**
  * @brief Matematical dynamic any type Matrix built with table of Vectors which are built with data type.
@@ -89,12 +92,13 @@ public:
      */
     Matrix &operator=(const Matrix &M);
 
-
+    /**
+     * @brief Checks if this and Matrix are the same
+     * @return true if they are
+     * @return false if not
+     */
     bool operator==(const Matrix &M) const;
 };
-
-
-
 
 /**
  * @brief Input stream operator

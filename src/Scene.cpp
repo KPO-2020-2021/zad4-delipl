@@ -2,12 +2,12 @@
 
 Scene::Scene(){
     this->UsunWszystkieNazwyPlikow();
-    this->_Xmax =  10 * WINDOW_SCALE;
-    this->_Xmin = -10 * WINDOW_SCALE;
-    this->_Ymax =  10  * WINDOW_SCALE;
-    this->_Ymin = -10  * WINDOW_SCALE;
-    this->_Zmax =  10  * WINDOW_SCALE;
-    this->_Zmin =  -10 * WINDOW_SCALE;
+    // this->_Xmax =  10 * WINDOW_SCALE;
+    // this->_Xmin = -10 * WINDOW_SCALE;
+    // this->_Ymax =  10  * WINDOW_SCALE;
+    // this->_Ymin = -10  * WINDOW_SCALE;
+    // this->_Zmax =  10  * WINDOW_SCALE;
+    // this->_Zmin =  -10 * WINDOW_SCALE;
     this->ZmienTrybRys(PzG::TR_3D);
     this->Inicjalizuj();
 

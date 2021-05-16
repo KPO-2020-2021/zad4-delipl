@@ -25,8 +25,8 @@ int main(int argc, const char** argv) {
     Scene scene;
     Object cuboid("cube.dat", 16);
     Object ground("ground.dat", 4);
-    scene.AddObject(cuboid);
-    scene.AddObject(ground);
+    scene.AddObject(&cuboid);
+    scene.AddObject(&ground);
     
 
     std::cout << "Start animating..." << std::endl;

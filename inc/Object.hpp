@@ -1,10 +1,14 @@
 #ifndef __OBJECT_HPP__
 #define __OBJECT_HPP__
 #include "Matrix3x3.hpp"
-// #include "Quaternion.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
+/**
+ * @file
+ * Describes Transform Class and Object Class
+ */
+
 /**
  * @brief Collects position, angles and scale of whole object. 
  */
@@ -53,6 +57,9 @@ class Object{
          */
         Object(const Object &obj);
 
+        /**
+         * @brief Destroy the Object object 
+         */
         virtual ~Object();
         
         /**

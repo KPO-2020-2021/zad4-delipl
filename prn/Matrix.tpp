@@ -1,6 +1,9 @@
 #include <cmath>
 #include <iomanip>
 #include "Matrix.hpp"
+/**
+ * @file Definitions for template class Matrix
+ */
 
 /* -------------------------------------------------------------------------- */
 /*                                CONSTRUCTORS                                */

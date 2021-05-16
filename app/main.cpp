@@ -54,7 +54,10 @@ int main(){
 
             }
             catch(std::logic_error &e){
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<int>().max(), '\n');
                 std::cout << e.what() << std::endl;
+                
             }
         }},
         {"Translate - vector x y z", [&translation](){
@@ -66,14 +69,19 @@ int main(){
 
 
     while(true){ 
-        // system("clear");
+     
         scene.Update();
         std::cout << menu;
         try{
             std::cin >> menu;
         }
         catch(std::logic_error &e){
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<int>().max(), '\n');
             std::cout << e.what() << std::endl;
+        }
+        catch(...){
+            return 0;
         }
 
         obj = ref;

@@ -2,9 +2,9 @@
 #include <limits>
 #include <iomanip> 
 #include "Vector.hpp"
-#ifndef MIN_DIFF
-    #define MIN_DIFF 0.0000001
-#endif
+/**
+ * @file Definitions for template class Vector
+ */
 
 /* -------------------------------------------------------------------------- */
 /*                                CONSTRUCTORS                                */
