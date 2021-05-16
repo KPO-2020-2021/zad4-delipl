@@ -9,19 +9,17 @@
 class Scene: public PzG::LaczeDoGNUPlota{
     std::vector<Object*> activeObjects;
 
-    std::vector<Object> originObjects;
-
     public:
         Scene();
 
         ~Scene();
 
-        void AddObject(Object &obj);
+        void AddObject(Object *obj);
 
         void Update();
 
         void Start();
 
-        Object &operator[](const std::size_t &i);
+        Object** operator[](const std::size_t &i);
 };
 #endif // __SCENE_HPP__

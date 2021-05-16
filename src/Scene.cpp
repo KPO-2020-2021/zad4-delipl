@@ -18,19 +18,20 @@ Scene::~Scene(){
     system("killall gnuplot");
 }
 
-void Scene::AddObject(Object &obj){
-    this->DodajNazwePliku(std::string(TMP_FOLDER + obj.Name()).c_str());
-    this->activeObjects.push_back(&obj);
+void Scene::AddObject(Object *obj){
+    this->DodajNazwePliku(std::string(TMP_FOLDER + obj->Name()).c_str());
+    this->activeObjects.push_back(obj);
+    std::cout << obj << "   " << this->activeObjects[0] << std::endl;
 }
 
-Object &Scene::operator[](const std::size_t &i){
+Object **Scene::operator[](const std::size_t &i){
     if(i >= this->activeObjects.size())
         throw std::overflow_error("There is no more objects");
-    return *(this->activeObjects[i]);
+    return &(this->activeObjects[i]);
 }
         
 void Scene::Update(){
-    for(auto obj : this->activeObjects){
+    for(Object* obj : this->activeObjects){
         obj->Save();
     }
     this->Rysuj();

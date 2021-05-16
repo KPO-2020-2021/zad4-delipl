@@ -16,17 +16,21 @@ int main(){
               << PROJECT_VERSION_TWEAK /* zmiany estetyczne itd. */
               << std::endl;
     std::system("cat ./LICENSE");
-    std::cout << std::endl << std::endl << std::endl;
+    std::cout << "Press enter to start..." << std::endl << std::endl << std::endl;
+    std::cin.ignore(std::numeric_limits<int>().max(), '\n');
 
-    Object *obj = new Object("cuboid.dat", 20);
+    Object ref("cuboid.dat", 20);
+    Object obj(ref);
+
     Scene scene;
-    scene.AddObject(*obj);
+    scene.AddObject(&obj);
 
-    auto translate = new Vector3;
-    auto rotation  = new MatrixRot;
+    Vector3 translation;
+    // MatrixRot rotation;
+    auto rotation = new MatrixRot;
 
     Menu menu({
-        {"Rotate - Choose axis, angle and rotate times.", [&obj, &rotation](){
+        {"Rotate - Choose axis, angle and rotate times.", [&rotation](){
             char axis = ' ';
             double angle = 0, times = 0;
             try{
@@ -35,16 +39,13 @@ int main(){
                     throw std::logic_error("Wrong input!!!");
                 switch (axis){
                 case 'x':
-                    *rotation *= MatrixRot(angle, VectorX);
-                    obj->Rotate(angle, times, VectorX);
+                    *rotation = (*rotation) * MatrixRot(angle, VectorX);
                     break;
                 case 'y':
-                    *rotation *= MatrixRot(angle, VectorY);
-                    obj->Rotate(angle, times, VectorY);
+                    *rotation = (*rotation) * MatrixRot(angle, VectorY);
                     break;
                 case 'z':
-                    *rotation *= MatrixRot(angle, VectorZ);
-                    obj->Rotate(angle, times, VectorZ);
+                    *rotation = (*rotation) * MatrixRot(angle, VectorZ);
                     break;
                 default:
                     throw std::logic_error("Wrong axis");
@@ -56,19 +57,17 @@ int main(){
                 std::cout << e.what() << std::endl;
             }
         }},
-        {"Translate - vector x y z", [&obj, &translate](){
+        {"Translate - vector x y z", [&translation](){
             Vector3 x;
             std::cin >> x;
-            obj->Translate(x);
+            translation += x;
         }}
     });
 
 
-    
-
     while(true){ 
+        // system("clear");
         scene.Update();
-        system("clear");
         std::cout << menu;
         try{
             std::cin >> menu;
@@ -76,7 +75,10 @@ int main(){
         catch(std::logic_error &e){
             std::cout << e.what() << std::endl;
         }
-       
+
+        obj = ref;
+        obj.Translate(translation);
+        std::cout << *rotation;
+        obj.Rotate(*rotation);
     }
-    delete obj;
 }

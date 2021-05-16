@@ -67,7 +67,7 @@ TEST_CASE("8. Vector Dot product Vector by Vector") {
     double z = -12.5;
     CHECK((u & x) == z);
 }
-TEST_CASE("9. Vector CrossPrepare of 2x3"){
+TEST_CASE("9. Vector CrossPrepare of 3x3"){
     Vector3 v({4, 4, 0});
     Vector3 u({6, 4, 0});
     Vector3 x = v * u;

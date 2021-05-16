@@ -47,6 +47,12 @@ class Object{
          */
         Object(const std::string name, const std::size_t &pointNumber);
 
+        /**
+         * @brief Construct a new Object object
+         * @param obj copied Object
+         */
+        Object(const Object &obj);
+
         virtual ~Object();
         
         /**
@@ -81,6 +87,13 @@ class Object{
         Vector3 &operator[](const std::size_t &index);
 
         /**
+         * @brief Copies all points and name to this
+         * @param obj copied object
+         * @return Object& 
+         */
+        Object &operator=(const Object &obj);
+
+        /**
          * @brief Save points into file name
          */
         void Save();
@@ -99,6 +112,12 @@ class Object{
          * @param v Vector3 of axis rotation
          */
         virtual void Rotate(const double &angle, const std::size_t &times, const Vector3 &v);
+
+        /**
+         * @brief Rotates every point from \a points and \a transform of Object
+         * @param M rotation matrix
+         */
+        virtual void Rotate(const MatrixRot &M);
 };
 
 

@@ -23,6 +23,12 @@ TEST_CASE("2. Object constriuctor, open file and read data"){
 
     CHECK_NOTHROW(rect.Save());
     CHECK_THROWS_AS(Object rect("nonExistsFile.dat", 4), std::exception);
+
+    Object rect2(rect);
+    CHECK(rect2[0] == Vector3({60, 60, 60}));
+    CHECK(rect2[1] == Vector3({210, 60, 60}));
+    CHECK(rect2[2] == Vector3({210, 160, 60}));
+    CHECK(rect2[3] == Vector3({60, 160, 60}));
 }
 
 
@@ -40,4 +46,11 @@ TEST_CASE("4. Object 8 points rotate"){
     CHECK(rect1[0][0] - (60) < MIN_DIFF);
     CHECK(rect1[0][1] - (-60) < MIN_DIFF);
     CHECK(rect1[0][2] - (60) < MIN_DIFF);
+
+    Object rect2("prostokat.dat", 4);
+    MatrixRot D(90, VectorX);
+    rect2.Rotate(D);
+    CHECK(rect2[0][0] - (60) < MIN_DIFF);
+    CHECK(rect2[0][1] - (-60) < MIN_DIFF);
+    CHECK(rect2[0][2] - (60) < MIN_DIFF);
 }

@@ -22,7 +22,6 @@ std::istream &operator>>(std::istream &cin, const Menu &menu){
     if(!cin)
         throw std::logic_error("Menu input error");
 
-    system("clear");
     if(i == 0 || i > menu.options.size()){
         return cin;
     }

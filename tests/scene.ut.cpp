@@ -27,7 +27,7 @@ TEST_CASE("3. Draw Rectangle"){
     Scene scene;
     Object rect("prostokat.dat", 4);
 
-    CHECK_NOTHROW(scene.AddObject(rect));
+    CHECK_NOTHROW(scene.AddObject(&rect));
 
    if(DISPLAY){
         scene.Update();
@@ -40,7 +40,7 @@ TEST_CASE("3. Draw Rectangle"){
 TEST_CASE("4. Draw gravitation"){
     Scene scene;
     Object cuboid("cube.dat", 16);
-    CHECK_NOTHROW(scene.AddObject(cuboid));
+    CHECK_NOTHROW(scene.AddObject(&cuboid));
 
     if(DISPLAY){
         scene.Update();

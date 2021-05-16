@@ -19,11 +19,34 @@ Object::Object(const std::string name, const std::size_t &points){
     this->Save();
 }
 
+Object::Object(const Object &obj) {
+    this->name = obj.Name();
+    this->points.clear();
+    this->points = std::vector<Vector3>(obj.CountPoints(), Vector3());
+    this->transform = obj.transform;
+
+    for(std::size_t i = 0; i < obj.CountPoints(); ++i){
+        this->points[i] = obj[i];
+    }
+    this->Save();
+}
+
 Object::~Object() {
     this->points.clear();
 }
 
+Object& Object::operator=(const Object &obj) {
+    this->name = obj.Name();
+    this->points.clear();
+    this->points = std::vector<Vector3>(obj.CountPoints(), Vector3());
+    this->transform = obj.transform;
 
+    for(std::size_t i = 0; i < obj.CountPoints(); ++i){
+        this->points[i] = obj[i];
+    }
+    this->Save();
+    return *this;
+}
 
 Vector3 & Object::operator[](const std::size_t &index) { 
     if(index >= this->CountPoints())
@@ -40,7 +63,6 @@ void Object::Save(){
     std::ofstream tmpFile(TMP_FOLDER + this->Name());
     if(tmpFile)
         tmpFile << *this;
-    // tmpFile << (*this)[0];
     tmpFile.close();
 }
 
@@ -55,7 +77,11 @@ void Object::Rotate(const double &angle, const std::size_t &times, const Vector3
     for (std::size_t t = 0; t < times; ++t)
         for(auto &x: this->points)
             x = rotM * x ;
-    
+}
+
+void Object::Rotate(const MatrixRot &M) {
+        for(auto &x: this->points)
+            x = M * x ;
 }
 
 std::istream &operator>>(std::istream &strm, Object &object){

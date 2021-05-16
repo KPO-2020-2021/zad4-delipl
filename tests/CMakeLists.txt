@@ -35,5 +35,5 @@ include(CodeCoverage)
 
 # verbose full described tests (make fulltest)
 add_custom_target(fulltest
-    ${TEST_MAIN} -s
+    ${TEST_MAIN} 
     WORKING_DIRECTORY  ${PROJECT_SOURCE_DIR})

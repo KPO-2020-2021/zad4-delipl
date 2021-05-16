@@ -7,21 +7,21 @@ TEST_CASE("1. Matrix default constructor"){
     CHECK_NOTHROW(Matrix3x3 M);
 
     Matrix2x2 M;
-    CHECK(M[0][0] == 1);
+    CHECK(M[0][0] == 0);
     CHECK(M[0][1] == 0);
     CHECK(M[1][0] == 0);
-    CHECK(M[1][1] == 1);
+    CHECK(M[1][1] == 0);
 
-    Matrix3x3 N;
+    MatrixRot N;
     CHECK(N[0][0] == 1);
     CHECK(N[0][1] == 0);
-    CHECK(N[0][2] == 1);
+    CHECK(N[0][2] == 0);
 
     CHECK(N[1][0] == 0);
     CHECK(N[1][1] == 1);
     CHECK(N[1][2] == 0);
 
-    CHECK(N[2][0] == 1);
+    CHECK(N[2][0] == 0);
     CHECK(N[2][1] == 0);
     CHECK(N[2][2] == 1);
 
@@ -94,4 +94,23 @@ TEST_CASE("10. Multiplar Matrix"){
     CHECK(W[0][1] == 64);
     CHECK(W[1][0] == 139);
     CHECK(W[1][1] == 154);
+
+    MatrixRot K;
+    Matrix3x3 L({
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    });
+
+    CHECK(L == K*L);
+}
+
+TEST_CASE("Matrix operator="){
+    Matrix2x2 D({   {2, 1}, {3,7}   });
+
+    D = Matrix2x2();
+    CHECK(D[0][0] == 0);
+    CHECK(D[0][1] == 0);
+    CHECK(D[1][0] == 0);
+    CHECK(D[1][1] == 0);
 }

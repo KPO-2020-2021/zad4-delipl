@@ -88,7 +88,12 @@ public:
      * @return Matrix& 
      */
     Matrix &operator=(const Matrix &M);
+
+
+    bool operator==(const Matrix &M) const;
 };
+
+
 
 
 /**

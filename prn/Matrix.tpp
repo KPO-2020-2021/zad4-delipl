@@ -8,11 +8,6 @@
 template <typename T, std::size_t dimN, std::size_t dimM>
 Matrix<T, dimN, dimM>::Matrix() {
     this->vector = std::vector<Vector<T, dimM>> (dimN, Vector<T, dimM>());
-    for(std::size_t i = 0; i < dimN; ++i){
-        for(std::size_t j = 0; j < dimM; ++j){
-            if(i%2 == j%2) (*this)[i][j] = 1;
-        }
-    }
 }
 
 template <typename T, std::size_t dimN, std::size_t dimM>
@@ -110,6 +105,7 @@ Matrix<T, dimN, dimN> Matrix<T, dimN, dimM>::operator*(const Matrix<T, dimM, dim
 
 template <typename T, std::size_t dimN, std::size_t dimM>
 Matrix<T, dimN, dimN> &Matrix<T, dimN, dimM>::operator*=(const Matrix<T, dimM, dimN> &M){
+    static_assert(dimM != dimN, "Cannot define this! And cannot change dimention template");
     Matrix<T, dimN, dimM> flippedMatrix = M.Flip();
     for(std::size_t i = 0; i < dimN; ++i)
         for(std::size_t j = 0; j < dimN; ++j)
@@ -132,12 +128,18 @@ std::ostream &operator<<(std::ostream &cout, const Matrix<T, dimN, dimM> &M){
 
 template <typename T, std::size_t dimN, std::size_t dimM>
 Matrix<T, dimN, dimM> &Matrix<T, dimN, dimM>::operator=(const Matrix<T, dimN, dimM> &M){
-    std::size_t i = -1;
-    for(auto &x: this->vector){
-        for(std::size_t j = 0; j < dimM; ++j){
-            x[j] = M[++i][j];
-        }
-    }
-       
+    for(std::size_t i = 0; i < dimN; ++i)
+        for(std::size_t j = 0; j < dimM; ++j)
+            this->vector[i][j] = M[i][j];
+
     return *this;
+}
+
+template <typename T, std::size_t dimN, std::size_t dimM>
+bool Matrix<T, dimN, dimM>::operator==(const Matrix<T, dimN, dimM> &M) const{
+    std::size_t i = -1;
+    for(auto &x: this->vector)
+        if(x != M[++i]) return false;
+    
+    return true;
 }
