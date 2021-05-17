@@ -8,24 +8,24 @@ Menu::Menu(std::initializer_list<std::pair<std::string, std::function<void(void)
 }
 
 
-std::ostream &operator<<(std::ostream &cout, const Menu &menu){
+std::ostream &operator<<(std::ostream &strm, const Menu &menu){
     std::size_t i = 0;
-    cout << std::endl;
+    strm << std::endl;
     for(auto &optionName: menu.options)
-        cout << ++i << ". " << optionName.first << std::endl; 
+        strm << ++i << ". " << optionName.first << std::endl; 
 
-    return cout;
+    return strm;
 }
-std::istream &operator>>(std::istream &cin, const Menu &menu){
+std::istream &operator>>(std::istream &strm, const Menu &menu){
     std::size_t i = 0;
-    cin >> i; 
-    if(!cin)
+    strm >> i; 
+    if(!strm)
         throw std::logic_error("Menu input error");
 
-    if(i == 0 || i > menu.options.size()){
-        return cin;
-    }
+    if(i == 0 || i > menu.options.size())
+        throw std::logic_error("Menu input error: there is no option");
+    
     menu.options[i-1].second();
     
-    return cin;
+    return strm;
 }

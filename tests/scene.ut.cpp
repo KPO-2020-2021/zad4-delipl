@@ -7,23 +7,8 @@ extern bool DISPLAY;
 TEST_CASE("1. Scene constructor"){
     CHECK_NOTHROW(Scene scene);
 }
-// Bad test
 
-// TEST_CASE("2. Add object to scene"){
-//     Scene scene;
-//     Object rect("prostokat.dat", 4);
-//     CHECK_NOTHROW(scene.AddObject(rect));
-
-//     scene.AddObject(rect);
-//     rect.force = Vector3({1000, 0, 0});
-//     scene[0].ApplyPhysics();
-//     CHECK(scene[0][0] == Vector3({60.225, 60, 60}));
-//     CHECK(scene[0][1] == Vector3({210.225, 60, 60}));
-//     CHECK(scene[0][2] == Vector3({210.225, 160, 60}));
-//     CHECK(scene[0][3] == Vector3({60.225, 160, 60}));
-// }
-
-TEST_CASE("3. Draw Rectangle"){
+TEST_CASE("2. Draw Rectangle"){
     Scene scene;
     Object rect("prostokat.dat", 4);
 
@@ -37,15 +22,28 @@ TEST_CASE("3. Draw Rectangle"){
   
 }
 
-TEST_CASE("4. Draw gravitation"){
+TEST_CASE("3 Pointners to objects"){
     Scene scene;
-    Object cuboid("cube.dat", 16);
-    CHECK_NOTHROW(scene.AddObject(&cuboid));
+    auto objectCreator = new Object("line.dat", 1);
+    scene.AddObject(objectCreator);
 
-    if(DISPLAY){
-        scene.Update();
-        std::cout << scene[0] << std::endl;
-        std::cout << "Press Enter to continue..." << std::endl;
-        std::cin.ignore(std::numeric_limits<int>().max(), '\n');
-    }
+    (*scene[0])->Rotate(90, VectorZ);
+
+    CHECK( (*(*scene[0]))[0][0]  < MIN_DIFF   );
+
+    // CHECK(*(scene[0])[1] - 1 < MIN_DIFF);
+    // CHECK(*(scene[0])[2] - 0 < MIN_DIFF);
 }
+
+// TEST_CASE("4. Draw gravitation"){
+//     Scene scene;
+//     Object cuboid("cube.dat", 16);
+//     CHECK_NOTHROW(scene.AddObject(&cuboid));
+
+//     if(DISPLAY){
+//         scene.Update();
+//         std::cout << scene[0] << std::endl;
+//         std::cout << "Press Enter to continue..." << std::endl;
+//         std::cin.ignore(std::numeric_limits<int>().max(), '\n');
+//     }
+// }

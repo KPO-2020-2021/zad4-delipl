@@ -6,6 +6,11 @@
 
 
 int main(){
+
+    /* -------------------------------------------------------------------------- */
+    /*                              INIT INFORMATIONS                             */
+    /* -------------------------------------------------------------------------- */
+
     std::cout << "Project Rotation 3D based on C++ Boiler Plate by Jakub Delicat v"
               << PROJECT_VERSION_MAJOR /*duże zmiany, najczęściej brak kompatybilności wstecz */
               << "."
@@ -19,28 +24,34 @@ int main(){
     std::cout << "Press enter to start..." << std::endl << std::endl << std::endl;
     std::cin.ignore(std::numeric_limits<int>().max(), '\n');
 
-    Object ref("cuboid.dat", 20);
-    Object obj(ref);
+    /* -------------------------------------------------------------------------- */
+    /*                              CREATING FIGURES                              */
+    /* -------------------------------------------------------------------------- */
+
+
+    Object obj("cuboid.dat", 20);
 
     Scene scene;
     scene.AddObject(&obj);
 
     Vector3 translation;
-    // MatrixRot rotation;
     MatrixRot rotation;
+    std::size_t times = 1;
 
     /* -------------------------------------------------------------------------- */
     /*                              MENU CONSTRUCTOR                              */
     /* -------------------------------------------------------------------------- */
     bool finish = false;
-    MatrixRot oneRot;
+    std::vector<MatrixRot> rotationSequece;
     Menu menu({
-        {"Rotate - Choose axis, angle (print . to exit)", [&rotation, &oneRot](){
+        {"Choose Figure to work with (index)", []()    {}                },
+        {"Rotate - Choose axis, angle (print . to exit)", [&obj, &rotation, &rotationSequece, &times](){
             char axis = ' ';
             double angle = 0;
+            rotation = MatrixRot();
             try{
                 bool finish = false;
-                std::vector<MatrixRot> rotationSequece;
+                rotationSequece.clear();
                 while(!finish){
                     
                     std::cin >> axis;
@@ -49,14 +60,14 @@ int main(){
 
                     if(axis == '.'){
                         std::cout << "How many time rotate?" << std::endl;
-                        std::size_t times;
+                        
                         std::cin >> times;
                         if(!std::cin)
                             throw std::logic_error("Wrong input!!!");
 
                         for(std::size_t i = 0; i < times; ++i)
                             for(auto &rot : rotationSequece)
-                                rotation = rotation * rot;
+                                rotation = rot * rotation;
                         
                         return;
                     }
@@ -86,12 +97,13 @@ int main(){
             }
             catch(std::logic_error &e){
                 std::cin.clear();
-                // std::cin.ignore(std::numeric_limits<int>().max(), '\n');
                 std::cout << e.what() << std::endl;
             }
         }},
-        {"Rotate again with the last sequence", [&oneRot, &rotation](){
-            rotation = rotation * oneRot;
+        {"Rotate again with the last sequence", [&rotationSequece, &times,&rotation](){
+            for(std::size_t i = 0; i < times; ++i)
+                for(auto &rot : rotationSequece)
+                        rotation = rotation * rot;
         }},
         {"Print rotaion Matrix", [&rotation](){ std::cout << rotation << std::endl;}},
         {"Translate - vector x y z", [&translation](){
@@ -118,8 +130,8 @@ int main(){
             std::cout << "Edge 4 b: " << (obj[10] - obj[14]).Length() << "\t";
             std::cout << std::endl;
 
-            std::cout << "Diffrence between edges: " << (obj[5] - obj[6]).Length() - (obj[9] - obj[10]).Length()<< "\t";
-            std::cout << "Diffrence between edges: " << (obj[1] - obj[2]).Length() - (obj[13] - obj[14]).Length()<< "\t";
+            std::cout << "Diffrence between edges: " << (obj[1] - obj[5]).Length() - (obj[2] - obj[6]).Length()<< "\t";
+            std::cout << "Diffrence between edges: " << (obj[9] - obj[13]).Length() - (obj[10] - obj[14]).Length()<< "\t";
             std::cout << std::endl;
             std::cout << std::endl;
             
@@ -129,8 +141,8 @@ int main(){
             std::cout << "Edge 4 c: " << (obj[14] - obj[18]).Length() << "\t";
             std::cout << std::endl;
 
-            std::cout << "Diffrence between edges: " << (obj[5] - obj[6]).Length() - (obj[9] - obj[10]).Length()<< "\t";
-            std::cout << "Diffrence between edges: " << (obj[1] - obj[2]).Length() - (obj[13] - obj[14]).Length()<< "\t";
+            std::cout << "Diffrence between edges: " << (obj[5] - obj[9]).Length() -  (obj[6] - obj[10]).Length() << "\t";
+            std::cout << "Diffrence between edges: " << (obj[13] - obj[17]).Length() - (obj[14] - obj[18]).Length()<< "\t";
             std::cout << std::endl;
             std::cout << std::endl;
 
@@ -143,7 +155,6 @@ int main(){
     /* -------------------------------------------------------------------------- */
     /*                                  MAIN LOOP                                 */
     /* -------------------------------------------------------------------------- */
-    
     while(!finish){ 
      
         scene.Update();
@@ -157,11 +168,8 @@ int main(){
             std::cout << e.what() << std::endl;
         }
         catch(...){
-            return 0;
+            std::cerr << "Fatal error, cautch ununderstable throw!!!" << std::endl;
+            return -1;
         }
-
-        obj = ref;
-        obj.Translate(translation);
-        obj.Rotate(rotation);
     }
 }

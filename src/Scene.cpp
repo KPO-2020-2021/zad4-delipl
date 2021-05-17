@@ -21,7 +21,6 @@ Scene::~Scene(){
 void Scene::AddObject(Object *obj){
     this->DodajNazwePliku(std::string(TMP_FOLDER + obj->Name()).c_str());
     this->activeObjects.push_back(obj);
-    std::cout << obj << "   " << this->activeObjects[0] << std::endl;
 }
 
 Object **Scene::operator[](const std::size_t &i){
@@ -32,6 +31,8 @@ Object **Scene::operator[](const std::size_t &i){
         
 void Scene::Update(){
     for(Object* obj : this->activeObjects){
+        obj->Rotate();
+        obj->Translate();
         obj->Save();
     }
     this->Rysuj();

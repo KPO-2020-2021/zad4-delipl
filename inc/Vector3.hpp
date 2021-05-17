@@ -16,17 +16,17 @@ typedef Vector<double, 3> Vector3;
 typedef Vector<double, 2> Vector2;
 
 /**
- * @brief X axis Vector3
+ * @brief X axis Vector3 (1, 0, 0)
  */
 static Vector3 VectorX = {1, 0, 0};
 
 /**
- * @brief Y axis Vector3
+ * @brief Y axis Vector3 (0, 1, 0)
  */
 static Vector3 VectorY = {0, 1, 0};
 
 /**
- * @brief Z axis Vector3
+ * @brief Z axis Vector3 (0, 0, 1)
  */
 static Vector3 VectorZ = {0, 0, 1};
 

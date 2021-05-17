@@ -1,5 +1,5 @@
 #include "doctest.h"
-
+#include "config.hpp"
 #include "Matrix3x3.hpp"
 TEST_CASE("1. Matrix default constructor"){
     CHECK_NOTHROW(Matrix<int, 3, 15> M());
@@ -105,7 +105,7 @@ TEST_CASE("10. Multiplar Matrix"){
     CHECK(L == K*L);
 }
 
-TEST_CASE("Matrix operator="){
+TEST_CASE("11. Matrix operator="){
     Matrix2x2 D({   {2, 1}, {3,7}   });
 
     D = Matrix2x2();
@@ -113,4 +113,24 @@ TEST_CASE("Matrix operator="){
     CHECK(D[0][1] == 0);
     CHECK(D[1][0] == 0);
     CHECK(D[1][1] == 0);
+}
+
+TEST_CASE("12. Rotation test"){
+    Vector3 v = {1, 0, 0};
+    MatrixRot Mx(90, VectorX);
+    MatrixRot My(90, VectorY);
+    MatrixRot Mz(90, VectorZ);
+    CHECK( (Mx * v - VectorX)[2] <= MIN_DIFF);
+    CHECK( (Mz * v - VectorY)[2] <= MIN_DIFF);
+    CHECK( (Mx * v - VectorX)[1] <= MIN_DIFF);
+    CHECK( (Mz * v - VectorY)[1] <= MIN_DIFF);
+    CHECK( (Mx * v - VectorX)[0] <= MIN_DIFF);
+    CHECK( (Mz * v - VectorY)[0] <= MIN_DIFF);
+
+    CHECK((Mx * Mz * v - VectorZ)[0] <= MIN_DIFF);
+    CHECK((Mz * Mx * v - VectorY)[0] <= MIN_DIFF);
+    CHECK((Mx * Mz * v - VectorZ)[1] <= MIN_DIFF);
+    CHECK((Mz * Mx * v - VectorY)[1] <= MIN_DIFF);
+    CHECK((Mx * Mz * v - VectorZ)[2] <= MIN_DIFF);
+    CHECK((Mz * Mx * v - VectorY)[2] <= MIN_DIFF);
 }

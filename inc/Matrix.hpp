@@ -98,6 +98,13 @@ public:
      * @return false if not
      */
     bool operator==(const Matrix &M) const;
+
+     /**
+     * @brief Checks if this and Matrix are not the same
+     * @return false if they are
+     * @return true if not
+     */
+    bool operator!=(const Matrix &M) const;
 };
 
 /**

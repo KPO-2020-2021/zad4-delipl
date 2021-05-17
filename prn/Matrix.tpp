@@ -146,3 +146,12 @@ bool Matrix<T, dimN, dimM>::operator==(const Matrix<T, dimN, dimM> &M) const{
     
     return true;
 }
+
+template <typename T, std::size_t dimN, std::size_t dimM>
+bool Matrix<T, dimN, dimM>::operator!=(const Matrix<T, dimN, dimM> &M) const{
+    std::size_t i = -1;
+    for(auto &x: this->vector)
+        if(x == M[++i]) return false;
+    
+    return true;
+}
