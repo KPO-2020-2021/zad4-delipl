@@ -36,7 +36,3 @@ void Scene::Update(){
     }
     this->Rysuj();
 }
-
-void Scene::Start(){
-
-}
