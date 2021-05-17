@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_NO_UNPREFIXED_OPTIONS
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
+#include "config.hpp"
 bool DISPLAY = false; 
 
 class dt_removed {

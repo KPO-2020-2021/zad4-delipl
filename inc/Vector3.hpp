@@ -2,6 +2,10 @@
 #define __VECTOR3_HPP__
 #include "Vector.hpp"
 /**
+ * @file Instantiation of template class Vector
+ */
+
+/**
  * @brief three dimentional double Vector
  */
 typedef Vector<double, 3> Vector3;

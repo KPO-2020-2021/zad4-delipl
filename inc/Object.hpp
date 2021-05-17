@@ -14,15 +14,21 @@
  */
 struct Transform{
     public:
+        /**
+         * @brief Pinned Transform
+         */
+        Transform *pinned;
+
         Vector3 position;
 
-        Vector3 angles;
+        MatrixRot rotation;
 
         Vector3 scale;
 
         Transform(){
+            pinned = nullptr;
             position    = Vector3();
-            angles      = Vector3();
+            rotation    = MatrixRot();
             scale       = Vector3({1, 1, 1});
         }
 };

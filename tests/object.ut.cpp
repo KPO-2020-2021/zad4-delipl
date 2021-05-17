@@ -1,11 +1,13 @@
 #include "doctest.h"
 #include <fstream>
 #include "Object.hpp"
+#include "config.hpp"
 TEST_CASE("1. Transform constructor"){
     CHECK_NOTHROW(Transform trans);
     Transform trans;
     CHECK(trans.position == Vector3());
-    CHECK(trans.angles == Vector3());
+    CHECK(trans.rotation == MatrixRot());
+    CHECK(trans.pinned == nullptr);
     CHECK(trans.scale == Vector3({1, 1, 1}));
 }
 TEST_CASE("2. Object constriuctor, open file and read data"){

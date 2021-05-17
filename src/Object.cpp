@@ -77,6 +77,7 @@ void Object::Rotate(const double &angle, const std::size_t &times, const Vector3
     for (std::size_t t = 0; t < times; ++t)
         for(auto &x: this->points)
             x = rotM * x ;
+    transform.rotation = transform.rotation * rotM;
 }
 
 void Object::Rotate(const MatrixRot &M) {

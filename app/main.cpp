@@ -27,48 +27,124 @@ int main(){
 
     Vector3 translation;
     // MatrixRot rotation;
-    auto rotation = new MatrixRot;
+    MatrixRot rotation;
 
+    /* -------------------------------------------------------------------------- */
+    /*                              MENU CONSTRUCTOR                              */
+    /* -------------------------------------------------------------------------- */
+    bool finish = false;
+    MatrixRot oneRot;
     Menu menu({
-        {"Rotate - Choose axis, angle and rotate times.", [&rotation](){
+        {"Rotate - Choose axis, angle (print . to exit)", [&rotation, &oneRot](){
             char axis = ' ';
-            double angle = 0, times = 0;
+            double angle = 0;
             try{
-                std::cin >> axis >> angle >> times;
-                if(!std::cin)
-                    throw std::logic_error("Wrong input!!!");
-                switch (axis){
-                case 'x':
-                    *rotation = (*rotation) * MatrixRot(angle, VectorX);
-                    break;
-                case 'y':
-                    *rotation = (*rotation) * MatrixRot(angle, VectorY);
-                    break;
-                case 'z':
-                    *rotation = (*rotation) * MatrixRot(angle, VectorZ);
-                    break;
-                default:
-                    throw std::logic_error("Wrong axis");
-                    break;
-                }
+                bool finish = false;
+                std::vector<MatrixRot> rotationSequece;
+                while(!finish){
+                    
+                    std::cin >> axis;
+                    if(!std::cin)
+                        throw std::logic_error("Wrong input!!!");
 
+                    if(axis == '.'){
+                        std::cout << "How many time rotate?" << std::endl;
+                        std::size_t times;
+                        std::cin >> times;
+                        if(!std::cin)
+                            throw std::logic_error("Wrong input!!!");
+
+                        for(std::size_t i = 0; i < times; ++i)
+                            for(auto &rot : rotationSequece)
+                                rotation = rotation * rot;
+                        
+                        return;
+                    }
+                    
+                    std::cin  >> angle;
+                    if(!std::cin)
+                        throw std::logic_error("Wrong input!!!");
+
+                    switch (axis){
+                    case 'X':
+                    case 'x':
+                        rotationSequece.push_back(MatrixRot(angle, VectorX));
+                        break;
+                    case 'Y':
+                    case 'y':
+                        rotationSequece.push_back(MatrixRot(angle, VectorY));
+                        break;
+                    case 'Z':
+                    case 'z':
+                        rotationSequece.push_back(MatrixRot(angle, VectorZ));
+                        break;
+                    default:
+                        throw std::logic_error("Wrong axis");
+                        break;
+                    }
+                }
             }
             catch(std::logic_error &e){
                 std::cin.clear();
-                std::cin.ignore(std::numeric_limits<int>().max(), '\n');
+                // std::cin.ignore(std::numeric_limits<int>().max(), '\n');
                 std::cout << e.what() << std::endl;
-                
             }
         }},
+        {"Rotate again with the last sequence", [&oneRot, &rotation](){
+            rotation = rotation * oneRot;
+        }},
+        {"Print rotaion Matrix", [&rotation](){ std::cout << rotation << std::endl;}},
         {"Translate - vector x y z", [&translation](){
             Vector3 x;
             std::cin >> x;
             translation += x;
+        }},
+        {"Print cords of Figure", [&obj](){std::cout << obj << std::endl;}},
+        {"Check lengths of Figure",[&obj](){
+            std::cout << "Edge 1 a: " << (obj[1] - obj[2]).Length() << "\t";
+            std::cout << "Edge 2 a: " << (obj[5] - obj[6]).Length() << "\t";
+            std::cout << "Edge 3 a: " << (obj[9] - obj[10]).Length() << "\t";
+            std::cout << "Edge 4 a: " << (obj[13] - obj[14]).Length() << "\t";
+            std::cout << std::endl;
+
+            std::cout << "Diffrence between edges: " << (obj[5] - obj[6]).Length() - (obj[9] - obj[10]).Length()<< "\t";
+            std::cout << "Diffrence between edges: " << (obj[1] - obj[2]).Length() - (obj[13] - obj[14]).Length()<< "\t";
+            std::cout << std::endl;
+            std::cout << std::endl;
+
+            std::cout << "Edge 1 b: " << (obj[1] - obj[5]).Length() << "\t";
+            std::cout << "Edge 2 b: " << (obj[9] - obj[13]).Length() << "\t";
+            std::cout << "Edge 3 b: " << (obj[2] - obj[6]).Length() << "\t";
+            std::cout << "Edge 4 b: " << (obj[10] - obj[14]).Length() << "\t";
+            std::cout << std::endl;
+
+            std::cout << "Diffrence between edges: " << (obj[5] - obj[6]).Length() - (obj[9] - obj[10]).Length()<< "\t";
+            std::cout << "Diffrence between edges: " << (obj[1] - obj[2]).Length() - (obj[13] - obj[14]).Length()<< "\t";
+            std::cout << std::endl;
+            std::cout << std::endl;
+            
+            std::cout << "Edge 1 c: " << (obj[5] - obj[9]).Length() << "\t";
+            std::cout << "Edge 2 c: " << (obj[13] - obj[17]).Length() << "\t";
+            std::cout << "Edge 3 c: " << (obj[6] - obj[10]).Length() << "\t";
+            std::cout << "Edge 4 c: " << (obj[14] - obj[18]).Length() << "\t";
+            std::cout << std::endl;
+
+            std::cout << "Diffrence between edges: " << (obj[5] - obj[6]).Length() - (obj[9] - obj[10]).Length()<< "\t";
+            std::cout << "Diffrence between edges: " << (obj[1] - obj[2]).Length() - (obj[13] - obj[14]).Length()<< "\t";
+            std::cout << std::endl;
+            std::cout << std::endl;
+
+        }},
+        {"Exit", [&finish](){
+            finish = true;
         }}
     });
 
-
-    while(true){ 
+    /* -------------------------------------------------------------------------- */
+    /*                                  MAIN LOOP                                 */
+    /* -------------------------------------------------------------------------- */
+    
+    while(!finish){ 
      
         scene.Update();
         std::cout << menu;
@@ -86,7 +162,6 @@ int main(){
 
         obj = ref;
         obj.Translate(translation);
-        std::cout << *rotation;
-        obj.Rotate(*rotation);
+        obj.Rotate(rotation);
     }
 }

@@ -28,13 +28,3 @@ MatrixRot::MatrixRot(): Matrix3x3() {
         (*this)[i][i] = 1;
 }
 
-// MatrixRot MatrixRot::operator*(const Matrix3x3 &M) const{
-//     MatrixRot Mat;
-//     Matrix flippedMatrix = M.Flip();
-//     for(std::size_t i = 0; i < 3; ++i)
-//         for(std::size_t j = 0; j < 3; ++j)
-//             Mat [i][j] = ((*this)[i] & flippedMatrix[j]);
-    
-//     return Mat;
-    
-// }
