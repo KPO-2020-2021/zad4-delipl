@@ -1,7 +1,7 @@
 #include "con.hpp"
 template<>
 Test<float, 2>::Test(){
-    std::cout << "Dupakupa\n";
+    std::cout << "TEST FLOAT 2\n";
 }
 
 template<int x>

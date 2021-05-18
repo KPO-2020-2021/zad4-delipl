@@ -6,7 +6,7 @@ class Test{
     public:
         T tab[x];
         Test();
-        Test(const Test &dupa);
+        Test(const Test &KK);
 };
 #include "test.tpp"
 #endif // __TEST_HPP__
