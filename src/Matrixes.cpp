@@ -1,5 +1,9 @@
 #include "Matrixes.hpp"
 
+MatrixRot::MatrixRot(): Matrix3x3() {
+    for(std::size_t i = 0; i < 3; ++i)
+        (*this)[i][i] = 1;
+}
 
 MatrixRot::MatrixRot(double angle, const Vector3 &axis){
     angle *= M_PI/180;
@@ -21,10 +25,5 @@ MatrixRot::MatrixRot(double angle, const Vector3 &axis){
     else{
         throw std::logic_error("Can't make MatrixRot. Wrong axis.");
     }
-}
-
-MatrixRot::MatrixRot(): dMatrixSqr<3>() {
-    for(std::size_t i = 0; i < 3; ++i)
-        (*this)[i][i] = 1;
 }
 

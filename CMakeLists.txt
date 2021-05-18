@@ -37,11 +37,21 @@ find_lto(CXX)
 # --------------------------------------------------------------------------------
 #                         Locate files (change as needed).
 # --------------------------------------------------------------------------------
-file(GLOB SOURCES ./src/*.cpp) # All .cpp files in src/
+# file(GLOB SOURCES ./src/*.cpp) # All .cpp files in src/
+set(SOURCES ./src/Vectors.cpp 
+            ./src/Matrixes.cpp
+            ./src/Object.cpp
+            
+            ./src/GnuPlotApi.cpp
+            ./src/Scene.cpp
+
+            ./src/Menu.cpp 
+            
+)
 
 file(GLOB TEST_FILES ./tests/*.ut.cpp)       # All .cpp files in tests/
 
-add_library(SOURCES_LIB OBJECT ${SOURCES})
+add_library(SOURCES_LIB ${SOURCES})
 # --------------------------------------------------------------------------------
 #                            Build! (Change as needed)
 # --------------------------------------------------------------------------------
