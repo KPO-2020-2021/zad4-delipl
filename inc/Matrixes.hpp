@@ -15,63 +15,86 @@
 #endif // !MIN_DIFF
 
 /**
- * @brief Checks if every diffrence is bigger  than MIN_DIFF
- * @param v compared dMatrixSqe
- * @return true if is lower
- * @return false if is bigger 
+ * @brief Square Matrix with double values and comare with MIN_DIFF
+ * @tparam dim 
  */
 template<std::size_t dim>
-bool Matrix<double, dim, dim>::operator==(const  Matrix<double, dim, dim> &v) const{
-    for (std::size_t i = 0; i < dim; ++i)
-        for (std::size_t j = 0; j < dim; ++j)
-            if (std::abs(this->vector[i][j] - v[i][j]) > MIN_DIFF)
-                return false;
-    return true;
-}
+class dMatrixSqr: public Matrix<double, dim, dim>{
+    public:
+        /**
+         * @brief Construct a new d Matrix Sqr object
+         */
+        dMatrixSqr(): Matrix<double, dim, dim>() {}
 
-/**
- * @brief Checks if every diffrence is bigger than MIN_DIFF
- * @param v compared dMatrixSqe
- * @return true if is bigger 
- * @return false if is less
- */
-template<std::size_t dim>
-bool Matrix<double, dim, dim>::operator!=(const  Matrix<double, dim, dim> &v) const{
-    for (std::size_t i = 0; i < dim; ++i)
-        for (std::size_t j = 0; j < dim; ++j)
-            if (std::abs(this->vector[i][j] - v[i][j]) <= MIN_DIFF)
-                return false;
-    return true;
-}
-/**
- * @brief Checks if every value is lower than MIN_DIFF
- * @param v compared dMatrixSqe
- * @return true if is lower
- * @return false if is bigger 
- */
-template<std::size_t dim>
-bool Matrix<double, dim, dim>::operator!() const{
-    for (std::size_t i = 0; i < dim; ++i)
-        for (std::size_t j = 0; j < dim; ++j)
-            if (std::abs(this->vector[i][j]) >= MIN_DIFF)
-                return false;
-    return true;
-}
+        /**
+         * @brief Construct a new d Matrix Sqr object
+         * @param list of inserted values
+         */
+        dMatrixSqr(const std::initializer_list<Vector<double, dim>> &list): Matrix<double, dim, dim>(list) {}
+
+        /**
+         * @brief Construct a new d Matrix Sqr object
+         * @param M copied Matrix
+         */
+        dMatrixSqr(const Matrix<double, dim, dim> &M): Matrix<double, dim, dim>(M){}
+
+        /**
+         * @brief Checks if every diffrence is bigger  than MIN_DIFF
+         * @param v compared dMatrixSqe
+         * @return true if is lower
+         * @return false if is bigger 
+         */
+        bool operator==(const dMatrixSqr &v) const{
+            for (std::size_t i = 0; i < dim; ++i)
+                for (std::size_t j = 0; j < dim; ++j)
+                    if (abs(this->vector[i][j] - v[i][j]) > MIN_DIFF)
+                        return false;
+            return true;
+        }
+
+        /**
+         * @brief Checks if every diffrence is bigger than MIN_DIFF
+         * @param v compared dMatrixSqe
+         * @return true if is bigger 
+         * @return false if is less
+         */
+        bool operator!=(const dMatrixSqr &v) const{
+            for (std::size_t i = 0; i < dim; ++i)
+                for (std::size_t j = 0; j < dim; ++j)
+                    if (abs(this->vector[i][j] - v[i][j]) <= MIN_DIFF)
+                        return false;
+            return true;
+        }
+
+        /**
+         * @brief Checks if every value is lower than MIN_DIFF
+         * @param v compared dMatrixSqe
+         * @return true if is lower
+         * @return false if is bigger 
+         */
+        bool operator!() const{
+            for (std::size_t i = 0; i < dim; ++i)
+                for (std::size_t j = 0; j < dim; ++j)
+                    if (abs(this->vector[i][j]) >= MIN_DIFF)
+                        return false;
+            return true;
+        }
+};
 
 /**
  * @brief four dimentional square double Matrix
  */
-typedef Matrix<double, 4, 4> Matrix4x4;
+typedef dMatrixSqr<4> Matrix4x4;
 
 /**
  * @brief three dimentional square double Matrix
  */
-typedef Matrix<double, 3, 3> Matrix3x3;
+typedef dMatrixSqr<3> Matrix3x3;
 
 /**
  * @brief two dimentional square double Matrix
  */
-typedef Matrix<double, 2, 2> Matrix2x2;
+typedef dMatrixSqr<2> Matrix2x2;
 
 
 
@@ -88,6 +111,11 @@ class MatrixRot: public Matrix3x3{
          */
         MatrixRot(const Matrix3x3 &M): Matrix3x3(M){}
 
+        /**
+         * @brief Construct a new Matrix Rot object and copy 
+         * @param M Copieied Matrix
+         */
+        MatrixRot(const Matrix<double, 3, 3> &M):  Matrix3x3(M){}
 
         /**
          * @brief Construct a new Matrix Rot object and fill with rotating values
