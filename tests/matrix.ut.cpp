@@ -1,6 +1,6 @@
 #include "doctest.h"
 #include "config.hpp"
-#include "Matrix3x3.hpp"
+#include "Matrixes.hpp"
 TEST_CASE("1. Matrix default constructor"){
     CHECK_NOTHROW(Matrix<int, 3, 15> M());
     CHECK_NOTHROW(Matrix2x2 M);

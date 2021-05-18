@@ -18,18 +18,8 @@
 // Delta time in seconds, to print GnuPlot
 #define dt 0.03
 
-// Gravity Force
-#define GRAVITY 0.0
-
 // GnuPlot Windows scale
 #define WINDOW_SCALE 10
 
-// Resistance of air
-#define RESISTANSE 0.5
-
-// Translate Time
-#define FORCE_IMPULSE_TIME 0.002
-
-#define FRICTION_COEFFICIENT 0.6
-
+// Minimal difference between two double numbers. It might be included
 #define MIN_DIFF 0.00000000001

@@ -62,7 +62,7 @@ T &Vector<T, dim>::operator[](const std::size_t &i){
 
 template <typename T, std::size_t dim>
 bool Vector<T, dim>::operator==(const Vector &v) const {
-    for (std::size_t i = 0; i < dim; i++)
+    for (std::size_t i = 0; i < dim; ++i)
         if (this->cord[i] != v[i])
             return false;
     return true;
@@ -150,18 +150,6 @@ Vector<T, dim> Vector<T, dim>::operator/(const T &k) const{
     for (const T x : this->cord)
         u[++i] =  x / k;
     return u;
-}
-
-template <typename T, std::size_t dim>
-Vector<T, dim> &Vector<T, dim>::operator*=(const Vector &v) {
-    static_assert(dim == 3, "Cross product does not defined");
-    return *this;
-}
-
-template <typename T, std::size_t dim>
-Vector<T, dim> Vector<T, dim>::operator*(const Vector &v) const{
-    static_assert(dim == 3, "Cross product does not defined");
-    return *this;
 }
 
 template <typename T, std::size_t dim>

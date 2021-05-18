@@ -98,8 +98,7 @@ void Object::Rotate(const double &angle, const Vector3 &v) {
 }
 
 void Object::Rotate(const MatrixRot &M) {
-    if(M != MatrixRot())
-        this->rotation = M * this->rotation;
+    this->rotation = M * this->rotation;
 
     this->actualPoints = this->originPoints;
     for(auto &x: this->actualPoints)

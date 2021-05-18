@@ -1,7 +1,7 @@
 #include "doctest.h"
 #include <fstream>
-#include "Object.hpp"
 #include "config.hpp"
+#include "Object.hpp"
 TEST_CASE("1. Transform constructor"){
     CHECK_NOTHROW(Transform trans);
     Transform trans;
@@ -39,30 +39,27 @@ TEST_CASE("4. Object 8 actualPoints rotate"){
     Object rect("prostokat.dat", 4);
 
     rect.Rotate(90, VectorZ);
-    CHECK(rect[0][0] - (-60) < MIN_DIFF);
-    CHECK(rect[0][1] - (60) < MIN_DIFF);
-    CHECK(rect[0][2] - (60) < MIN_DIFF);
+    CHECK(rect[0] == Vector3({-60, 60, 60}));
 
-    Object rect1("prostokat.dat", 4);
+    Object rect1("line.dat", 1);
     rect1.Rotate(90, VectorX);
-    CHECK(rect1[0][0] - (60) < MIN_DIFF);
-    CHECK(rect1[0][1] - (-60) < MIN_DIFF);
-    CHECK(rect1[0][2] - (60) < MIN_DIFF);
+    CHECK(rect1[0] == Vector3({100, 0, 0}));
 
-    MatrixRot D(90, VectorX);
-    rect1.Rotate(D);
-    CHECK(rect1[0][0] - (-60) < MIN_DIFF);
-    CHECK(rect1[0][1] - (-60) < MIN_DIFF);
-    CHECK(rect1[0][2] - (60) < MIN_DIFF);
+    rect1.Rotate(90, VectorY);
+    CHECK(rect1[0] == Vector3({0, 0, -100}));
 
     rect1.Rotate(-90, VectorX);
-    CHECK(rect1[0][0] - (60) < MIN_DIFF);
-    CHECK(rect1[0][1] - (-60) < MIN_DIFF);
-    CHECK(rect1[0][2] - (60) < MIN_DIFF);
+    CHECK(rect1[0] == Vector3({0, -100, 0}));
 
-    MatrixRot E(-90, VectorX);
-    rect1.Rotate(E);
-    CHECK(rect1[0][0] - (60) < MIN_DIFF);
-    CHECK(rect1[0][1] - (60) < MIN_DIFF);
-    CHECK(rect1[0][2] - (60) < MIN_DIFF);
+
+    Object line("line.dat", 1);
+    line.Rotate(MatrixRot(90, VectorX));
+    CHECK(line[0] == Vector3({100, 0, 0}));
+
+    line.Rotate(MatrixRot(90, VectorY));
+    CHECK(line[0] == Vector3({0, 0, -100}));
+
+    line.Rotate(MatrixRot(-90, VectorX));
+    CHECK(line[0] == Vector3({0, -100, 0}));
+
 }

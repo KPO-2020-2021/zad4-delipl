@@ -1,5 +1,5 @@
 #include "doctest.h"
-#include "Vector3.hpp"
+#include "Vectors.hpp"
 
 TEST_CASE("1. Vector default constructor"){  
     CHECK_NOTHROW(Vector2 w);
@@ -67,23 +67,23 @@ TEST_CASE("8. Vector Dot product Vector by Vector") {
     double z = -12.5;
     CHECK((u & x) == z);
 }
-TEST_CASE("9. Vector CrossPrepare of 3x3"){
-    Vector3 v({4, 4, 0});
-    Vector3 u({6, 4, 0});
-    Vector3 x = v * u;
-    Vector3 w({0, 0, -8});
-    CHECK(x == w);
+// TEST_CASE("9. Vector CrossPrepare of 3x3"){
+//     Vector3 v({4, 4, 0});
+//     Vector3 u({6, 4, 0});
+//     Vector3 x = v * u;
+//     Vector3 w({0, 0, -8});
+//     CHECK(x == w);
 
-    // Compilation Error
-    // Vector<double, 4> a({4, 4, 0, 5});
-    // Vector<double, 4> b({4, 4, 0, 5});
-    // a * b;
+//     // Compilation Error
+//     // Vector<double, 4> a({4, 4, 0, 5});
+//     // Vector<double, 4> b({4, 4, 0, 5});
+//     // a * b;
 
-    // Compilation Error
-    // Vector2 a({4, 4});
-    // Vector2 b({4, 4});
-    // a * b;
-}
+//     // Compilation Error
+//     // Vector2 a({4, 4});
+//     // Vector2 b({4, 4});
+//     // a * b;
+// }
 TEST_CASE("10. Vector input"){
     std::istringstream cin("5 30 10");
     Vector3 v;

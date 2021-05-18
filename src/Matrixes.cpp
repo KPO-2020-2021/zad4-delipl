@@ -1,10 +1,10 @@
-#include "Matrix3x3.hpp"
+#include "Matrixes.hpp"
 
 
 MatrixRot::MatrixRot(double angle, const Vector3 &axis){
     angle *= M_PI/180;
     if(axis == VectorX){
-        (*this)[0] = Vector3({1, 0         , 0          });
+        (*this)[0] = Vector3({1.0, 0.0         , 0.0    });
         (*this)[1] = Vector3({0, cos(angle), -sin(angle)});
         (*this)[2] = Vector3({0, sin(angle),  cos(angle)});
     }
@@ -23,7 +23,7 @@ MatrixRot::MatrixRot(double angle, const Vector3 &axis){
     }
 }
 
-MatrixRot::MatrixRot(): Matrix3x3() {
+MatrixRot::MatrixRot(): dMatrixSqr<3>() {
     for(std::size_t i = 0; i < 3; ++i)
         (*this)[i][i] = 1;
 }

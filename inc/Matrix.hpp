@@ -13,7 +13,7 @@
  */
 template <typename T, std::size_t dimN, std::size_t dimM>
 class Matrix {
-    
+protected:    
     /**
      * @brief Table of rows in Matrix. Vector of Vectors.
      */

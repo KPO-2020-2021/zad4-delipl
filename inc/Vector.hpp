@@ -10,7 +10,7 @@
  */
 template <typename T, std::size_t dim>
 class Vector{
-private:
+protected:
     /**
      * @brief Values of sent type.
     * @return Pointer to table of variables.
@@ -119,16 +119,6 @@ public:
      * @brief Division by number
     */
     Vector &operator/=(const T &k);
-
-    /**
-     * @brief Cross product u x v
-     */
-    Vector operator*(const Vector &v) const;
-
-    /**
-     * @brief Cross product u x v
-     */
-    Vector &operator*=(const Vector &v);
 
     /**
      * @brief Dot product 

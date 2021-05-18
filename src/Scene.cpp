@@ -11,29 +11,35 @@ Scene::Scene(){
     this->ZmienTrybRys(PzG::TR_3D);
     this->Inicjalizuj();
 
-    this->activeObjects = std::vector<Object*>();
+    this->activeObjects = std::vector<Object>();
 }
 
 Scene::~Scene(){
     system("killall gnuplot");
 }
 
-void Scene::AddObject(Object *obj){
-    this->DodajNazwePliku(std::string(TMP_FOLDER + obj->Name()).c_str());
+void Scene::AddObject(const Object &obj){
+    this->DodajNazwePliku(std::string(TMP_FOLDER + obj.Name()).c_str());
     this->activeObjects.push_back(obj);
 }
 
-Object **Scene::operator[](const std::size_t &i){
+Object &Scene::operator[](const std::size_t &i){
     if(i >= this->activeObjects.size())
         throw std::overflow_error("There is no more objects");
-    return &(this->activeObjects[i]);
+    return this->activeObjects[i];
+}
+
+Object Scene::operator[](const std::size_t &i) const{
+    if(i >= this->activeObjects.size())
+        throw std::overflow_error("There is no more objects");
+    return this->activeObjects[i];
 }
         
 void Scene::Update(){
-    for(Object* obj : this->activeObjects){
-        obj->Rotate();
-        obj->Translate();
-        obj->Save();
+    for(auto &obj : this->activeObjects){
+        obj.Rotate();
+        obj.Translate();
+        obj.Save();
     }
     this->Rysuj();
 }

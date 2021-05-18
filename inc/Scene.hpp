@@ -13,9 +13,9 @@
  */
 class Scene: public PzG::LaczeDoGNUPlota{
     /**
-     * @brief std::vector of pointners to objects on Scene
+     * @brief std::vector of  objects on Scene
      */
-    std::vector<Object*> activeObjects;
+    std::vector<Object> activeObjects;
 
     public:
         /**
@@ -32,7 +32,7 @@ class Scene: public PzG::LaczeDoGNUPlota{
          * @brief Links existing Object to Scene
          * @param obj Object
          */
-        void AddObject(Object *obj);
+        void AddObject(const Object &obj);
 
         /**
          * @brief Apply all moving functions to Objects
@@ -40,10 +40,17 @@ class Scene: public PzG::LaczeDoGNUPlota{
         void Update();
 
         /**
-         * @brief Access funtion to objects
+         * @brief Access funtion to write objects
          * @param i index of object
-         * @return Object** 
+         * @return Object
          */
-        Object** operator[](const std::size_t &i);
+        Object &operator[](const std::size_t &i);
+
+        /**
+         * @brief Access funtion to read objects
+         * @param i index of object
+         * @return Object
+         */
+        Object operator[](const std::size_t &i) const;
 };
 #endif // __SCENE_HPP__
