@@ -3,12 +3,19 @@
 #include <fstream>
 std::size_t Object::HMO = 0;
 
-Object::Object(const std::string name, const Vector3 &centerPosition): Transform(){
+Object::Object(const std::string name, const Vector3 &centerPosition,
+               const Vector3 &scale)
+    : Transform() {
+    this->lenPointsPack = 0;
+    this->scale = scale;
+    
     std::ifstream readFile(DATA_FOLDER + name);
     if(readFile.good())
         readFile >> *this;
-    else
-        throw std::logic_error("Cannot read object file! "+ std::string(DATA_FOLDER) + name);
+    else{
+        system("pwd");
+        throw std::logic_error("Cannot read object file! " + std::string(DATA_FOLDER) + name);
+    }
     readFile.close();
     std::cout   << "Loaded " << this->CountPoints() << " actualPoints " 
                 << "from " << DATA_FOLDER  + name <<std::endl;
@@ -20,7 +27,7 @@ Object::Object(const std::string name, const Vector3 &centerPosition): Transform
     this->originPoints = this->actualPoints;
 
     this->Save();
-    this->id = HMO++;
+    this->id = this->HMO++;
     this->name = std::to_string(this->id) + "_" + name;
 }
 
@@ -31,6 +38,7 @@ Object::Object(const Object &obj) {
     this->originPoints = std::vector<Vector3>(obj.CountPoints(), Vector3());
 
     this->name = obj.Name();
+    this->lenPointsPack = obj.LengthOfPointPack();
     this->rotation = obj.rotation;
     this->scale = obj.scale;
     this->position = obj.position;
@@ -45,24 +53,8 @@ Object::Object(const Object &obj) {
 }
 Object::~Object() {
     this->actualPoints.clear();
-    --HMO;
+    --this->HMO;
 }
-
-// Object& Object::operator=(const Object &obj) {
-//     this->name = obj.Name();
-//     this->actualPoints.clear();
-//     this->actualPoints = std::vector<Vector3>(obj.CountPoints(), Vector3());
-//     this->transform = obj.transform;
-
-//     for(std::size_t i = 0; i < obj.CountPoints(); ++i){
-//         this->actualPoints[i] = obj[i];
-//     }
-
-//     this->originPoints.clear();
-//     this->originPoints = this->actualPoints();
-//     this->Save();
-//     return *this;
-// }
 
 Vector3 & Object::operator[](const std::size_t &index) { 
     if(index >= this->actualPoints.size())
@@ -112,27 +104,24 @@ std::vector<Vector3> Object::OriginPoints() const{
     return this->originPoints;
 }
 std::istream &operator>>(std::istream &strm, Object &object){
-    char c = ' ';
     object.actualPoints.clear();
-    while(!strm.eof()){
-        c = ' ';
-        strm >> c >> std::ws;
+    std::size_t onePack = 0;
+    while (!strm.eof()){
+        if (strm.peek() == '#') {
+            strm.get();
+        } 
+        else if (strm.peek() == '\n') {
+            strm.get();
+            if (strm.peek() == '\n'){
+                object.lenPointsPack = onePack;
+            }
+        }
 
-        if(c == '#'){
-            strm.ignore(std::numeric_limits<int>().max(), '\n');
-        }
-        else{
-            if(strm.eof()) break;
-            strm.putback(c);
-            
-        }
         Vector3 x;
         try{
             strm >> x;
         }
         catch(std::logic_error &e){
-            std::cout << "'" << c << "'"<< std::endl;
-            std::cout << "'" << e.what() << "'"<< std::endl;
             strm.clear();
             return strm;
             
@@ -145,19 +134,25 @@ std::istream &operator>>(std::istream &strm, Object &object){
             x[j] = x[j] * object.scale[j];
 
         object.actualPoints.push_back(x);
+
+        if(object.lenPointsPack == 0)
+            ++onePack;
     }
     return strm;
 }
 
 
 std::ostream &operator<<(std::ostream &strm, const Object &object){
-    int k = 1;
+    std::size_t k = 1;
     for(std::size_t i = 0; i < object.CountPoints(); ++i){
         for(std::size_t j = 0; j < 3; ++j)
             object[i][j] = object[i][j] / object.scale[j];
 
         strm << object[i] << std::endl;
-        if(k % 4 == 0) strm << "#\n\n";
+        if(k == object.LengthOfPointPack()) {
+            strm << "#\n\n";
+            k = 0;
+        }
         if(!strm)
             throw std::logic_error("Cannot read Object!");
         ++k;

@@ -6,7 +6,7 @@
 # the source code. Include "exampleConfig.h" (no .in suffix) in the source.
 configure_file (
   "${PROJECT_SOURCE_DIR}/inc/config.hpp.in"
-  "${PROJECT_BINARY_DIR}/config.hpp"
+  "${PROJECT_SOURCE_DIR}/inc/config.hpp"
 )
 # add the binary tree to the search path for include files
 # so that we will find exampleConfig.h

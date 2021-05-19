@@ -30,11 +30,11 @@ int main(){
     /* -------------------------------------------------------------------------- */
 
     Scene scene;
-    // Object *obj = new Object("surface.dat", {0, 0, 0});
-    // scene.AddObject(*obj);
-    // delete obj;
-    std::cout << Object::HMO << std::endl;
-    Object *obj = new Object("prism.dat");
+    Object *obj = new Object("surface.dat", {-100, -100, 0});
+    scene.AddObject(*obj);
+    delete obj;
+
+    obj = new Object("prism.dat", Vector3(), {10, 10 ,10});
     scene.AddObject(*obj);
     delete obj;
     // obj = new Object("prism.dat",  {-1, 0, -1});

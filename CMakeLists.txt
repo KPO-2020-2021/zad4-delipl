@@ -67,6 +67,7 @@ target_include_directories(SOURCES_LIB PRIVATE ./inc ./prn)
 add_executable(main app/main.cpp)   # Name of exec. and location of file.
 
 target_include_directories(main PRIVATE ./inc ./prn)
+target_include_directories (main PRIVATE ./)
 target_link_libraries(main PUBLIC SOURCES_LIB)
 
 target_set_warnings(main ENABLE ALL AS_ERROR ALL DISABLE Annoying) # Set warnings (if needed).
@@ -79,6 +80,7 @@ set_target_properties(
     CXX_STANDARD 17 
     CXX_STANDARD_REQUIRED YES 
     CXX_EXTENSIONS NO
+    WORKING_DIRECTORY 	CMAKE_HOME_DIRECTORY
 )
 
 # Set up tests (see tests/CMakeLists.txt).
@@ -105,6 +107,7 @@ set_target_properties(
     CXX_STANDARD 17 
     CXX_STANDARD_REQUIRED YES 
     CXX_EXTENSIONS NO
+    WORKING_DIRECTORY  ${PROJECT_SOURCE_DIR}
 )
 
 # verbose full described tests (make fulltest)

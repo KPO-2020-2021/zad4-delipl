@@ -64,11 +64,16 @@ class Object: public Transform{
          */
         std::vector<Vector3> actualPoints;
 
+
         /**
          * @brief List of origin points
          */
         std::vector<Vector3> originPoints;
 
+        /**
+         * @brief How many points should be in one pack. Packs are separated with new line.
+         */
+        std::size_t lenPointsPack;
 
     public:
         /**
@@ -82,7 +87,7 @@ class Object: public Transform{
          * @param pointNumber how many actualPoints is in the reading file
          * @param centerPosition center position of object
          */
-        Object(const std::string name, const Vector3 &centerPosition = Vector3());
+        Object(const std::string name, const Vector3 &centerPosition = Vector3(),  const Vector3 &scale = {1, 1, 1});
 
         /**
          * @brief Construct a new Object object
@@ -159,20 +164,27 @@ class Object: public Transform{
         std::size_t SeflID() const { return this->id;}
 
         /**
+         * @brief Acces function for lenPointsPack
+         */
+        std::size_t LengthOfPointPack() const { return this->lenPointsPack; }
+
+        /**
          * @brief Writing all \a actualPoints to \a Object 
          * @param strm input stream
          * @param object written \a Object
          * @return std::istream& 
          */
         friend std::istream &operator>>(std::istream &strm, Object &object);
+
+        /**
+         * @brief Printing all \a actualPoints from \a Object 
+         * @param strm output stream
+         * @param object printed \a Object
+         * @return std::ostream& 
+         */
+        friend std::ostream &operator<<(std::ostream &strm, const Object &object);
 };
 
-/**
- * @brief Printing all \a actualPoints from \a Object 
- * @param strm output stream
- * @param object printed \a Object
- * @return std::ostream& 
- */
-std::ostream &operator<<(std::ostream &strm, const Object &object);
+
 
 #endif // __OBJECT_HPP__

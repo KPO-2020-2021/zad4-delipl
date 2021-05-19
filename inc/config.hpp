@@ -6,10 +6,10 @@
  * right definition values. Change the namings as you wish,
  * but make sure they match up with whats in CMakeLists.txt.
  */
-#define PROJECT_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
-#define PROJECT_VERSION_MINOR @PROJECT_VERSION_MINOR@
-#define PROJECT_VERSION_PATCH @PROJECT_VERSION_PATCH@
-#define PROJECT_VERSION_TWEAK @PROJECT_VERSION_TWEAK@
+#define PROJECT_VERSION_MAJOR 2
+#define PROJECT_VERSION_MINOR 0
+#define PROJECT_VERSION_PATCH 0
+#define PROJECT_VERSION_TWEAK 0
 
 #define DATA_FOLDER "./dat/"
 #define TMP_FOLDER "./tmp/"
