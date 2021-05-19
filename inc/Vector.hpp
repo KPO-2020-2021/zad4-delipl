@@ -13,7 +13,6 @@ class Vector{
 protected:
     /**
      * @brief Values of sent type.
-    * @return Pointer to table of variables.
     */
     std::vector<T> cord;
 public:
@@ -24,7 +23,7 @@ public:
 
     /**
      * @brief Construct a new Vector object.
-    * @param v Vector to copy.
+     * @param v Vector to copy.
     */
     Vector(const Vector &v);
 
@@ -39,8 +38,6 @@ public:
      * @return T length of vector
     */
     T Length() const;
-
-    std::vector<T> All() const;
 
     /**
      * @brief Acces to variables vector.
@@ -62,7 +59,7 @@ public:
 
     /**
      * @brief Compare two Vectors. Dimention and values.
-     * @param u Compare Vector.
+     * @param v Compare Vector.
      * @return False when dimention and values are the same,
                 true when  not.
     */

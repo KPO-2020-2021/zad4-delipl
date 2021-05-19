@@ -44,13 +44,16 @@ struct Transform{
             scale       = Vector3({1, 1, 1});
         }
 };
-
-
 /**
  * @brief Object Class, base class for printed activeObjects on screen
  */
 class Object: public Transform{
     private:
+        /**
+         * @brief id of object
+         */
+        std::size_t id;
+
         /**
          * @brief Name of Object
          */
@@ -66,14 +69,20 @@ class Object: public Transform{
          */
         std::vector<Vector3> originPoints;
 
+
     public:
+        /**
+         * @brief How many objects
+         */
+        static std::size_t HMO;
+
         /**
          * @brief Construct a new Object object
          * @param name of Object
          * @param pointNumber how many actualPoints is in the reading file
          * @param centerPosition center position of object
          */
-        Object(const std::string name, const std::size_t &vertexes, const Vector3 &centerPosition = Vector3());
+        Object(const std::string name, const Vector3 &centerPosition = Vector3());
 
         /**
          * @brief Construct a new Object object
@@ -85,11 +94,6 @@ class Object: public Transform{
          * @brief Destroy the Object object 
          */
         virtual ~Object();
-        
-        // /**
-        //  * @brief Informations about position of center point, rotation, scale and pinned transform
-        //  */
-        // Transform transform;
 
         /**
          * @brief Acces function for name of Object
@@ -117,13 +121,6 @@ class Object: public Transform{
          */
         Vector3 &operator[](const std::size_t &index);
 
-        // /**
-        //  * @brief Copies all actualPoints and name to this
-        //  * @param obj copied object
-        //  * @return Object& 
-        //  */
-        // Object &operator=(const Object &obj);
-
         /**
          * @brief Save actualPoints into file name
          */
@@ -135,7 +132,6 @@ class Object: public Transform{
          */
         virtual void Translate(const Vector3 &v = Vector3());
 
-        
         /**
          * @brief Rotates every point from \a actualPoints and \a transform of Object
          * @param angle angle of rotation
@@ -150,18 +146,26 @@ class Object: public Transform{
          */
         virtual void Rotate(const MatrixRot &M = MatrixRot());
 
+        /**
+         * @brief Read origin points
+         * @return std::vector<Vector3> 
+         */
         std::vector<Vector3> OriginPoints() const;
+
+        /**
+         * @brief Access function to id of Object
+         * @return std::size_t 
+         */
+        std::size_t SeflID() const { return this->id;}
+
+        /**
+         * @brief Writing all \a actualPoints to \a Object 
+         * @param strm input stream
+         * @param object written \a Object
+         * @return std::istream& 
+         */
+        friend std::istream &operator>>(std::istream &strm, Object &object);
 };
-
-
-/**
- * @brief Writing all \a actualPoints to \a Object 
- * @param strm input stream
- * @param object written \a Object
- * @return std::istream& 
- */
-std::istream &operator>>(std::istream &strm, Object &object);
-
 
 /**
  * @brief Printing all \a actualPoints from \a Object 

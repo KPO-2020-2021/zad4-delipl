@@ -64,7 +64,6 @@ class dVector : public Vector<double, dim>{
 
         /**
          * @brief Checks if every value is lower than MIN_DIFF
-         * @param v compared dVector
          * @return true if is lower
          * @return false if is bigger 
          */

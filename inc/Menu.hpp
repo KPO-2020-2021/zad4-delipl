@@ -23,7 +23,6 @@ class Menu{
 
     /**
      * @brief Choose options and do option
-     * @return choosed option
      */
     void Choose() const; 
 };

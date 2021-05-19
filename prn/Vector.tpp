@@ -3,7 +3,7 @@
 #include <iomanip> 
 #include "Vector.hpp"
 /**
- * @file Definitions for template class Vector
+ *  @
  */
 
 /* -------------------------------------------------------------------------- */
@@ -15,15 +15,14 @@ Vector<T, dim>::Vector() {
 }
 template <typename T, std::size_t dim>
 Vector<T, dim>::Vector(const Vector &v): Vector() {
-    std::size_t i = -1;
-    for(T &x: this->cord)
-        x = v[++i];
+    for (std::size_t i = 0; i < dim; ++i)
+        this->cord[i] = v[i];
 }
 template <typename T, std::size_t dim>
 Vector<T, dim>::Vector(const std::initializer_list<T> &list): Vector() {
     if(list.size() != dim)
         throw std::out_of_range("To many or less argumets");
-    std::size_t i = -1;
+    std::size_t i = std::numeric_limits<std::size_t>().max();
     for(const T x: list)
         this->cord[++i] = x;
 }
@@ -37,11 +36,6 @@ T Vector<T, dim>::Length() const {
     for (const T y: this->cord)
         x += y * y; 
     return sqrt(x);
-}
-
-template <typename T, std::size_t dim>
-std::vector<T> Vector<T, dim>::All() const{
-    return this->value;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -70,94 +64,85 @@ bool Vector<T, dim>::operator==(const Vector &v) const {
 
 template <typename T, std::size_t dim>
 bool Vector<T, dim>::operator!=(const Vector &v) const {
-    std::size_t i = -1;
-    for (const T x: this->cord)
-        if (x == v[++i])
+    for (std::size_t i = 0; i < dim; ++i)
+        if (this->cord[i] == v[i])
             return false;
     return true;
 }
 
 template <typename T, std::size_t dim>
 bool Vector<T, dim>::operator!() const{
-    for (const T x: this->cord)
-        if (x != T())
+    for (std::size_t i = 0; i < dim; ++i)
+        if (this->cord[i] != T())
             return false;
     return true;
 }
 
 template <typename T, std::size_t dim>
 Vector<T, dim> &Vector<T, dim>::operator=(const Vector &v) {
-    std::size_t i = -1;
-    for (T &x: this->cord)
-        x = v[++i];
+    for (std::size_t i = 0; i < dim; ++i)
+        this->cord[i] = v[i];
     return *this;
 }
 
 template <typename T, std::size_t dim>
 Vector<T, dim> Vector<T, dim>::operator+(const Vector &v) const {
     Vector u(v);
-    std::size_t i = -1;
-    for (const T x : this->cord)
-        u[i] =  u[++i] + x;
+    for (std::size_t i = 0; i < dim; ++i)
+        u[i] += this->cord[i];
     return u;
 }
 
 template <typename T, std::size_t dim>
 Vector<T, dim> &Vector<T, dim>::operator+=(const Vector &v) {
-    std::size_t i = -1;
-    for (T &x : this->cord)
-        x += v[++i];
+    for (std::size_t i = 0; i < dim; ++i)
+        this->cord[i] += v[i];
     return *this;
 }
 
 template <typename T, std::size_t dim>
 Vector<T, dim> Vector<T, dim>::operator-(const Vector &v) const {
     Vector u(v);
-    std::size_t i = -1;
-    for (const T x : this->cord)
-        u[i] =  x - u[++i];
+    for (std::size_t i = 0; i < dim; ++i)
+        u[i] =  this->cord[i] - u[i];
     return u;
 }
 
 template <typename T, std::size_t dim>
 Vector<T, dim> &Vector<T, dim>::operator-=(const Vector &v) {
-    std::size_t i = -1;
-    for (T &x : this->cord)
-        x -= v[++i];
+    for (std::size_t i = 0; i < dim; ++i)
+        this->cord[i] -= v[i];
     return *this;
 }
 
 template <typename T, std::size_t dim>
 Vector<T, dim> Vector<T, dim>::operator*(const T &k) const{
     Vector u(*this);
-    std::size_t i = -1;
-    for (const T x : this->cord)
-        u[++i] =  x * k;
+    for (std::size_t i = 0; i < dim; ++i)
+        u[i] =  this->cord[i] * k;
     return u;
 }
 
 template <typename T, std::size_t dim>
 Vector<T, dim> &Vector<T, dim>::operator*=(const T &k) {
-    for (T &x : this->cord)
-        x *= k;
+    for (std::size_t i = 0; i < dim; ++i)
+        this->cord[i] *= k;
     return *this;
 }
 
 template <typename T, std::size_t dim>
 Vector<T, dim> Vector<T, dim>::operator/(const T &k) const{
     Vector u(*this);
-    std::size_t i = -1;
-    for (const T x : this->cord)
-        u[++i] =  x / k;
+    for (std::size_t i = 0; i < dim; ++i)
+        u[i] =  this->cord[i] / k;
     return u;
 }
 
 template <typename T, std::size_t dim>
 T Vector<T, dim>::operator&(const Vector &v) const{
     T y = T();
-    std::size_t i = -1;
-    for (const T x : this->cord)
-        y += x * v[++i];
+    for (std::size_t i = 0; i < dim; ++i)
+        y += this->cord[i] * v[i];
     return y;
 }
 

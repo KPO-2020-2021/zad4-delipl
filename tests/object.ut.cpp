@@ -2,6 +2,7 @@
 #include <fstream>
 #include "config.hpp"
 #include "Object.hpp"
+
 TEST_CASE("1. Transform constructor"){
     CHECK_NOTHROW(Transform trans);
     Transform trans;
@@ -11,20 +12,20 @@ TEST_CASE("1. Transform constructor"){
     CHECK(trans.scale == Vector3({1, 1, 1}));
 }
 TEST_CASE("2. Object constriuctor, open file and read data"){
-    CHECK_NOTHROW(Object rect("prostokat.dat", 4));
-    Object rect("prostokat.dat", 4);
-
-    CHECK(rect.Name() == "prostokat.dat");
-    CHECK(rect.CountPoints() == 4);
+    CHECK_NOTHROW(Object rect("prostokat.dat"));
+    Object rect("prostokat.dat");
+    std::cout << rect << std::endl;
+    CHECK(rect.Name() == "0_prostokat.dat");
+    CHECK(rect.CountPoints() == 5);
 
     CHECK(rect[0] == Vector3({60, 60, 60}));
     CHECK(rect[1] == Vector3({210, 60, 60}));
     CHECK(rect[2] == Vector3({210, 160, 60}));
     CHECK(rect[3] == Vector3({60, 160, 60}));
-    CHECK_THROWS(rect[4] == Vector3());
+    CHECK_THROWS(rect[5] == Vector3());
 
     CHECK_NOTHROW(rect.Save());
-    CHECK_THROWS_AS(Object rect("nonExistsFile.dat", 4), std::exception);
+    CHECK_THROWS_AS(Object rect("nonExistsFile.dat"), std::exception);
 
     Object rect2(rect);
     CHECK(rect2[0] == Vector3({60, 60, 60}));
@@ -35,13 +36,13 @@ TEST_CASE("2. Object constriuctor, open file and read data"){
 
 
 TEST_CASE("4. Object 8 actualPoints rotate"){
-    CHECK_NOTHROW(Object rect("prostopadloscian.dat", 8));
-    Object rect("prostokat.dat", 4);
+    CHECK_NOTHROW(Object rect("prostopadloscian.dat"));
+    Object rect("prostokat.dat");
 
     rect.Rotate(90, VectorZ);
     CHECK(rect[0] == Vector3({-60, 60, 60}));
 
-    Object rect1("line.dat", 1);
+    Object rect1("line.dat");
     rect1.Rotate(90, VectorX);
     CHECK(rect1[0] == Vector3({100, 0, 0}));
 
@@ -52,7 +53,7 @@ TEST_CASE("4. Object 8 actualPoints rotate"){
     CHECK(rect1[0] == Vector3({0, -100, 0}));
 
 
-    Object line("line.dat", 1);
+    Object line("line.dat");
     line.Rotate(MatrixRot(90, VectorX));
     CHECK(line[0] == Vector3({100, 0, 0}));
 
@@ -61,5 +62,21 @@ TEST_CASE("4. Object 8 actualPoints rotate"){
 
     line.Rotate(MatrixRot(-90, VectorX));
     CHECK(line[0] == Vector3({0, -100, 0}));
+}
 
+TEST_CASE("9. Object ID"){
+    CHECK(Object::HMO == 0);
+    Object rect1("line.dat");
+    CHECK(Object::HMO == 1);
+    Object rect2("line.dat");
+    Object rect3("line.dat");
+    Object rect4("line.dat");
+    // Object rect5("line.dat", 1);
+
+    // CHECK(rect1.SeflID() == 1);
+    // CHECK(rect2.SeflID() == 2);
+    // CHECK(rect3.SeflID() == 3);
+    // CHECK(rect4.SeflID() == 4);
+    // CHECK(rect5.SeflID() == 5);
+    CHECK(Object::HMO == 4);
 }

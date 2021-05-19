@@ -2,12 +2,16 @@
 
 Scene::Scene(){
     this->UsunWszystkieNazwyPlikow();
-    // this->_Xmax =  10 * WINDOW_SCALE;
-    // this->_Xmin = -10 * WINDOW_SCALE;
-    // this->_Ymax =  10  * WINDOW_SCALE;
-    // this->_Ymin = -10  * WINDOW_SCALE;
-    // this->_Zmax =  10  * WINDOW_SCALE;
-    // this->_Zmin =  -10 * WINDOW_SCALE;
+    this->_Xmax =  10 * WINDOW_SCALE;
+    this->_Xmin = -10 * WINDOW_SCALE;
+    this->_Ymax =  10  * WINDOW_SCALE;
+    this->_Ymin = -10  * WINDOW_SCALE;
+    this->_Zmax =  10  * WINDOW_SCALE;
+    this->_Zmin =  -10 * WINDOW_SCALE;
+
+    // this->UstawSkaleXZ(10*WINDOW_SCALE, -10*WINDOW_SCALE);
+    // this->UstawSkaleY(10*WINDOW_SCALE);
+
     this->ZmienTrybRys(PzG::TR_3D);
     this->Inicjalizuj();
 
@@ -15,12 +19,13 @@ Scene::Scene(){
 }
 
 Scene::~Scene(){
+    system("rm ./tmp/*");
     system("killall gnuplot");
 }
 
 void Scene::AddObject(const Object &obj){
-    this->DodajNazwePliku(std::string(TMP_FOLDER + obj.Name()).c_str());
     this->activeObjects.push_back(obj);
+    this->DodajNazwePliku(std::string(TMP_FOLDER + obj.Name()).c_str());
 }
 
 Object &Scene::operator[](const std::size_t &i){

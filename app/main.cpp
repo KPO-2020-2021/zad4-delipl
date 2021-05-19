@@ -21,6 +21,7 @@ int main(){
               << PROJECT_VERSION_TWEAK /* zmiany estetyczne itd. */
               << std::endl;
     std::system("cat ./LICENSE");
+    std::system("pwd");
     std::cout << "Press enter to start..." << std::endl << std::endl << std::endl;
     std::cin.ignore(std::numeric_limits<int>().max(), '\n');
 
@@ -28,11 +29,25 @@ int main(){
     /*                              CREATING FIGURES                              */
     /* -------------------------------------------------------------------------- */
 
-
-    Object obj("cuboid.dat", 20);
-
     Scene scene;
-    scene.AddObject(&obj);
+    // Object *obj = new Object("surface.dat", {0, 0, 0});
+    // scene.AddObject(*obj);
+    // delete obj;
+    std::cout << Object::HMO << std::endl;
+    Object *obj = new Object("prism.dat");
+    scene.AddObject(*obj);
+    delete obj;
+    // obj = new Object("prism.dat",  {-1, 0, -1});
+    // scene.AddObject(*obj);
+    // delete obj;
+    // obj = new Object("prism.dat",  {-1, 0, 1});
+    // scene.AddObject(*obj);
+    // delete obj;
+    // obj = new Object("prism.dat",  {1, 0, -1});
+    // scene.AddObject(*obj);
+    // delete obj;
+
+
 
     Vector3 translation;
     MatrixRot rotation;
@@ -113,36 +128,36 @@ int main(){
         }},
         {"Print cords of Figure", [&obj](){std::cout << obj << std::endl;}},
         {"Check lengths of Figure",[&obj](){
-            std::cout << "Edge 1 a: " << (obj[1] - obj[2]).Length() << "\t";
-            std::cout << "Edge 2 a: " << (obj[5] - obj[6]).Length() << "\t";
-            std::cout << "Edge 3 a: " << (obj[9] - obj[10]).Length() << "\t";
-            std::cout << "Edge 4 a: " << (obj[13] - obj[14]).Length() << "\t";
+            std::cout << "Edge 1 a: " << ((*obj)[1] - (*obj)[2]).Length() << "\t";
+            std::cout << "Edge 2 a: " << ((*obj)[5] - (*obj)[6]).Length() << "\t";
+            std::cout << "Edge 3 a: " << ((*obj)[9] - (*obj)[10]).Length() << "\t";
+            std::cout << "Edge 4 a: " << ((*obj)[13] - (*obj)[14]).Length() << "\t";
             std::cout << std::endl;
 
-            std::cout << "Diffrence between edges: " << (obj[5] - obj[6]).Length() - (obj[9] - obj[10]).Length()<< "\t";
-            std::cout << "Diffrence between edges: " << (obj[1] - obj[2]).Length() - (obj[13] - obj[14]).Length()<< "\t";
+            std::cout << "Diffrence between edges: " << ((*obj)[5] - (*obj)[6]).Length() - ((*obj)[9] - (*obj)[10]).Length()<< "\t";
+            std::cout << "Diffrence between edges: " << ((*obj)[1] - (*obj)[2]).Length() - ((*obj)[13] - (*obj)[14]).Length()<< "\t";
             std::cout << std::endl;
             std::cout << std::endl;
 
-            std::cout << "Edge 1 b: " << (obj[1] - obj[5]).Length() << "\t";
-            std::cout << "Edge 2 b: " << (obj[9] - obj[13]).Length() << "\t";
-            std::cout << "Edge 3 b: " << (obj[2] - obj[6]).Length() << "\t";
-            std::cout << "Edge 4 b: " << (obj[10] - obj[14]).Length() << "\t";
+            std::cout << "Edge 1 b: " << ((*obj)[1] - (*obj)[5]).Length() << "\t";
+            std::cout << "Edge 2 b: " << ((*obj)[9] - (*obj)[13]).Length() << "\t";
+            std::cout << "Edge 3 b: " << ((*obj)[2] - (*obj)[6]).Length() << "\t";
+            std::cout << "Edge 4 b: " << ((*obj)[10] - (*obj)[14]).Length() << "\t";
             std::cout << std::endl;
 
-            std::cout << "Diffrence between edges: " << (obj[1] - obj[5]).Length() - (obj[2] - obj[6]).Length()<< "\t";
-            std::cout << "Diffrence between edges: " << (obj[9] - obj[13]).Length() - (obj[10] - obj[14]).Length()<< "\t";
+            std::cout << "Diffrence between edges: " << ((*obj)[1] - (*obj)[5]).Length() - ((*obj)[2] - (*obj)[6]).Length()<< "\t";
+            std::cout << "Diffrence between edges: " << ((*obj)[9] - (*obj)[13]).Length() - ((*obj)[10] - (*obj)[14]).Length()<< "\t";
             std::cout << std::endl;
             std::cout << std::endl;
             
-            std::cout << "Edge 1 c: " << (obj[5] - obj[9]).Length() << "\t";
-            std::cout << "Edge 2 c: " << (obj[13] - obj[17]).Length() << "\t";
-            std::cout << "Edge 3 c: " << (obj[6] - obj[10]).Length() << "\t";
-            std::cout << "Edge 4 c: " << (obj[14] - obj[18]).Length() << "\t";
+            std::cout << "Edge 1 c: " << ((*obj)[5] - (*obj)[9]).Length() << "\t";
+            std::cout << "Edge 2 c: " << ((*obj)[13] - (*obj)[17]).Length() << "\t";
+            std::cout << "Edge 3 c: " << ((*obj)[6] - (*obj)[10]).Length() << "\t";
+            std::cout << "Edge 4 c: " << ((*obj)[14] - (*obj)[18]).Length() << "\t";
             std::cout << std::endl;
 
-            std::cout << "Diffrence between edges: " << (obj[5] - obj[9]).Length() -  (obj[6] - obj[10]).Length() << "\t";
-            std::cout << "Diffrence between edges: " << (obj[13] - obj[17]).Length() - (obj[14] - obj[18]).Length()<< "\t";
+            std::cout << "Diffrence between edges: " << ((*obj)[5] - (*obj)[9]).Length() -  ((*obj)[6] - (*obj)[10]).Length() << "\t";
+            std::cout << "Diffrence between edges: " << ((*obj)[13] - (*obj)[17]).Length() - ((*obj)[14] - (*obj)[18]).Length()<< "\t";
             std::cout << std::endl;
             std::cout << std::endl;
 

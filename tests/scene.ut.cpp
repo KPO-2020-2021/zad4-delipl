@@ -10,7 +10,7 @@ TEST_CASE("1. Scene constructor"){
 
 TEST_CASE("2. Draw Rectangle"){
     Scene scene;
-    Object rect("prostokat.dat", 4);
+    Object rect("prostokat.dat");
 
     CHECK_NOTHROW(scene.AddObject(rect));
 
@@ -24,14 +24,11 @@ TEST_CASE("2. Draw Rectangle"){
 
 TEST_CASE("3 Pointners to objects"){
     Scene scene;
-    scene.AddObject(Object("line.dat", 1));
+    scene.AddObject(Object("line.dat"));
 
     scene[0].Rotate(90, VectorZ);
 
-    CHECK( scene[0][0][0]  < MIN_DIFF);
-
-    // CHECK(*(scene[0])[1] - 1 < MIN_DIFF);
-    // CHECK(*(scene[0])[2] - 0 < MIN_DIFF);
+    CHECK( scene[0][0]  == Vector3({0, 100, 0}));
 }
 
 // TEST_CASE("4. Draw gravitation"){

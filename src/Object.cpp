@@ -1,26 +1,27 @@
 #include "config.hpp"
 #include "Object.hpp"
 #include <fstream>
+std::size_t Object::HMO = 0;
 
-Object::Object(const std::string name, const std::size_t &vertexes, const Vector3 &centerPosition): Transform(){
-    this->name = name;
-    this->actualPoints = std::vector<Vector3>(vertexes, Vector3());
-    this->originPoints = std::vector<Vector3>(vertexes, Vector3());
-
-
-    std::ifstream readFile(DATA_FOLDER + this->Name());
+Object::Object(const std::string name, const Vector3 &centerPosition): Transform(){
+    std::ifstream readFile(DATA_FOLDER + name);
     if(readFile.good())
         readFile >> *this;
     else
-        throw std::logic_error("Cannot read object file! "+ std::string(DATA_FOLDER) + this->Name());
+        throw std::logic_error("Cannot read object file! "+ std::string(DATA_FOLDER) + name);
     readFile.close();
     std::cout   << "Loaded " << this->CountPoints() << " actualPoints " 
-                << "from " << DATA_FOLDER  + this->Name() <<std::endl;
+                << "from " << DATA_FOLDER  + name <<std::endl;
 
+    for(auto &point : this->actualPoints)
+        point += centerPosition;
+
+    this->originPoints = std::vector<Vector3>(this->actualPoints.size(), Vector3());
     this->originPoints = this->actualPoints;
 
-    this->Translate(centerPosition);
     this->Save();
+    this->id = HMO++;
+    this->name = std::to_string(this->id) + "_" + name;
 }
 
 Object::Object(const Object &obj) {
@@ -39,10 +40,12 @@ Object::Object(const Object &obj) {
         this->actualPoints[i] = obj[i];
     }
     this->Save();
+    
+    this->id = HMO++;
 }
-
 Object::~Object() {
     this->actualPoints.clear();
+    --HMO;
 }
 
 // Object& Object::operator=(const Object &obj) {
@@ -62,12 +65,12 @@ Object::~Object() {
 // }
 
 Vector3 & Object::operator[](const std::size_t &index) { 
-    if(index >= this->CountPoints())
+    if(index >= this->actualPoints.size())
         throw std::overflow_error("Vector overflow!");
     return this->actualPoints[index];
 }   
 Vector3 Object::operator[](const std::size_t &index) const{ 
-    if(index >= this->CountPoints())
+    if(index >= this->actualPoints.size())
         throw std::overflow_error("Vector overflow!");
     return this->actualPoints[index];
 }
@@ -108,22 +111,40 @@ void Object::Rotate(const MatrixRot &M) {
 std::vector<Vector3> Object::OriginPoints() const{
     return this->originPoints;
 }
-
 std::istream &operator>>(std::istream &strm, Object &object){
     char c = ' ';
-    for(std::size_t i = 0; i < object.CountPoints(); ++i){
+    object.actualPoints.clear();
+    while(!strm.eof()){
         c = ' ';
-        strm >> c;
-        if(c == '#')
+        strm >> c >> std::ws;
+
+        if(c == '#'){
             strm.ignore(std::numeric_limits<int>().max(), '\n');
-        else
+        }
+        else{
+            if(strm.eof()) break;
             strm.putback(c);
-        strm >> object[i];
+            
+        }
+        Vector3 x;
+        try{
+            strm >> x;
+        }
+        catch(std::logic_error &e){
+            std::cout << "'" << c << "'"<< std::endl;
+            std::cout << "'" << e.what() << "'"<< std::endl;
+            strm.clear();
+            return strm;
+            
+        }
+
         if(!strm)
             throw std::logic_error("Cannot read Object!");
 
         for(std::size_t j = 0; j < 3; ++j)
-            object[i][j] = object[i][j] * object.scale[j];
+            x[j] = x[j] * object.scale[j];
+
+        object.actualPoints.push_back(x);
     }
     return strm;
 }
