@@ -34,18 +34,25 @@ int main(){
     scene.AddObject(*obj);
     delete obj;
 
-    obj = new Object("prism.dat", Vector3(), {10, 10 ,10});
+    obj = new Object("prism.dat", {-50,0 ,0}, {40, 40 ,40});
     scene.AddObject(*obj);
     delete obj;
-    // obj = new Object("prism.dat",  {-1, 0, -1});
-    // scene.AddObject(*obj);
-    // delete obj;
-    // obj = new Object("prism.dat",  {-1, 0, 1});
-    // scene.AddObject(*obj);
-    // delete obj;
-    // obj = new Object("prism.dat",  {1, 0, -1});
-    // scene.AddObject(*obj);
-    // delete obj;
+    obj = new Object("prism.dat", {0, -50, 0}, {40, 40 ,40});
+    scene.AddObject(*obj);
+    delete obj;
+    obj = new Object("prism.dat", {-50, -50 ,0}, {40, 40 ,40});
+    scene.AddObject(*obj);
+    delete obj;
+    obj = new Object("prism.dat", {50, 0, 0}, {40, 40 ,40});
+    scene.AddObject(*obj);
+    delete obj;
+    obj = new Object("prism.dat", {0, 50, 0}, {40, 40 ,40});
+    scene.AddObject(*obj);
+    delete obj;
+    obj = new Object("prism.dat", {50, 50, 0}, {40, 40 ,40});
+    scene.AddObject(*obj);
+    delete obj;
+
 
 
 
