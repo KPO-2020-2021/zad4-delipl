@@ -44,7 +44,14 @@ class dVector : public Vector<double, dim>{
          */
         bool operator==(const dVector &v) const{
             for (std::size_t i = 0; i < dim; ++i)
-                if (abs(this->cord[i] - v[i]) > MIN_DIFF)
+                if (std::abs(this->cord[i] - v[i]) > MIN_DIFF)
+                    return false;
+            return true;
+        }
+
+        bool operator==(const Vector<double, 3> &v) const {
+            for (std::size_t i = 0; i < dim; ++i)
+                if (std::abs(this->cord[i] - v[i]) > MIN_DIFF)
                     return false;
             return true;
         }
@@ -57,7 +64,7 @@ class dVector : public Vector<double, dim>{
          */
         bool operator!=(const dVector &v) const{
             for (std::size_t i = 0; i < dim; ++i)
-                if (abs(this->cord[i] - v[i]) <= MIN_DIFF)
+                if (std::abs(this->cord[i] - v[i]) <= MIN_DIFF)
                     return false;
             return true;
         }
@@ -69,7 +76,7 @@ class dVector : public Vector<double, dim>{
          */
         bool operator!() const{
             for (double x: this->cord)
-                if (x >= MIN_DIFF)
+                if (std::abs(x) >= MIN_DIFF)
                     return false;
             return true;
         }

@@ -36,7 +36,7 @@ int program(int argc, const char** argv) {
     printf("Program: %d arguments received:\n", argc - 1);
     while(*++argv){
         printf("'%s'\n", *argv);
-        if(strcmp(*argv, "-w") == 0){
+        if(strcmp(*argv, "-x") == 0){
             printf("Ustawiam na prawidę!\n");
             DISPLAY = true;
         }

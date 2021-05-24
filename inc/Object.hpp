@@ -30,9 +30,9 @@ struct Transform{
         MatrixRot rotation;
 
         /**
-         * @brief Scale
+         * @brief Scale as a unit matrix
          */
-        Vector3 scale;
+        MatrixRot scale;
 
         /**
          * @brief Construct a new Transform object
@@ -41,7 +41,9 @@ struct Transform{
             pinned = nullptr;
             position    = Vector3();
             rotation    = MatrixRot();
-            scale       = Vector3({1, 1, 1});
+            scale       = MatrixRot();
+            for (std::size_t i = 0; i < 3; ++i)
+                scale[i][i] = 1;
         }
 };
 /**
@@ -52,7 +54,7 @@ class Object: public Transform{
         /**
          * @brief id of object
          */
-        std::size_t id;
+        const std::size_t id;
 
         /**
          * @brief Name of Object
@@ -75,17 +77,22 @@ class Object: public Transform{
          */
         std::size_t lenPointsPack;
 
-    public:
         /**
-         * @brief How many objects
+         * @brief Save actualPoints into file name
          */
-        static std::size_t HMO;
+        void Save();
 
         /**
+         * @brief Number of Objects
+         */
+        inline static std::size_t HMO = 0;
+
+       public:
+        /**
          * @brief Construct a new Object object
-         * @param name of Object
-         * @param pointNumber how many actualPoints is in the reading file
-         * @param centerPosition center position of object
+         * @param name of file in dat/ folder and of Object
+         * @param centerPosition center position of object default {0, 0, 0}
+         * @param scale scale of object default {1, 1, 1}
          */
         Object(const std::string name, const Vector3 &centerPosition = Vector3(),  const Vector3 &scale = {1, 1, 1});
 
@@ -127,11 +134,6 @@ class Object: public Transform{
         Vector3 &operator[](const std::size_t &index);
 
         /**
-         * @brief Save actualPoints into file name
-         */
-        void Save();
-
-        /**
          * @brief Translates every point from \a actualPoints and \a transform of Object
          * @param v translate Vector3
          */
@@ -167,6 +169,23 @@ class Object: public Transform{
          * @brief Acces function for lenPointsPack
          */
         std::size_t LengthOfPointPack() const { return this->lenPointsPack; }
+
+        /**
+         * @brief Update points. Make rotaion and translation
+         */
+        virtual void Update();
+
+        /**
+         * @brief Acces function to HMO
+         * @return std::size_t const number of objects
+         */
+        inline static std::size_t HowManyObjects() { return Object::HMO; }
+
+        /**
+         * @brief reading temporary file which is used for printing in GnuPlot
+         * @return Object read 
+         */
+        Object ReadTemporaryFile() const;
 
         /**
          * @brief Writing all \a actualPoints to \a Object 

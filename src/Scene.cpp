@@ -21,6 +21,7 @@ Scene::Scene(){
 Scene::~Scene(){
     system("rm ./tmp/*");
     system("killall gnuplot");
+    this->activeObjects.clear();
 }
 
 void Scene::AddObject(const Object &obj){
@@ -42,9 +43,8 @@ Object Scene::operator[](const std::size_t &i) const{
         
 void Scene::Update(){
     for(auto &obj : this->activeObjects){
-        obj.Rotate();
-        obj.Translate();
-        obj.Save();
+        obj.Update();
     }
+    
     this->Rysuj();
 }

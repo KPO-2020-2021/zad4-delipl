@@ -134,3 +134,9 @@ TEST_CASE("12. Rotation test"){
     CHECK((Mx * Mz * v - VectorZ)[2] <= MIN_DIFF);
     CHECK((Mz * Mx * v - VectorY)[2] <= MIN_DIFF);
 }
+
+TEST_CASE("TEST matrixt rot"){
+    MatrixRot M;
+    MatrixRot N(90, VectorX);
+    std::cout << M << std::endl << N << std::endl << N * M;
+}

@@ -17,7 +17,7 @@ add_executable(${TEST_MAIN} ./main.cpp ${TEST_FILES})
 
 
 target_link_libraries(${TEST_MAIN} PUBLIC  SOURCES_LIB doctest)
-target_include_directories(${TEST_MAIN} PUBLIC ../inc ../prn)
+target_include_directories(${TEST_MAIN} PUBLIC ../inc ../prn  ${PROJECT_SOURCE_DIR})
 
 set_target_properties(${TEST_MAIN} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 target_set_warnings(${TEST_MAIN} ENABLE ALL AS_ERROR ALL DISABLE Annoying) # Set warnings (if needed).
@@ -27,6 +27,8 @@ set_target_properties(${TEST_MAIN} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
     CXX_EXTENSIONS NO
+    VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    WORKING_DIRECTORY  "${PROJECT_SOURCE_DIR}"
 )
 
 
@@ -35,5 +37,9 @@ include(CodeCoverage)
 
 # verbose full described tests (make fulltest)
 add_custom_target(fulltest
-    ${TEST_MAIN} 
+    ${TEST_MAIN} -s
+    WORKING_DIRECTORY  ${PROJECT_SOURCE_DIR})
+
+add_custom_target(fulltestDisplay
+    ${TEST_MAIN} -x
     WORKING_DIRECTORY  ${PROJECT_SOURCE_DIR})
