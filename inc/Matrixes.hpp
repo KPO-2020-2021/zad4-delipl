@@ -125,4 +125,29 @@ class MatrixRot: public Matrix3x3{
         MatrixRot(double angle, const Vector3 &axis);
 };
 
-#endif // __MATRIXROT_H__
+/**
+ * @brief Transform Matrix 4x4 which collects translation, rotation and scale
+ */
+class MatrixTransform: public Matrix4x4{
+    public:
+     /**
+     * @brief Construct a new MatrixTransform object and fill like unit Matrix
+     */
+     MatrixTransform();
+     /**
+     * @brief Construct a new MatrixTransform object and copy 
+     * @param M Copieied Matrix
+     */
+     MatrixTransform(const Matrix4x4 &M) : Matrix4x4(M) {}
+
+     /**
+     * @brief Construct a new Matrix Transform object
+     * @param translate translate Vector3 to move bodies
+     * @param angles Vector3 of 3 angles in 3 axis
+     * @param scale Vector3 of scale in every dimention
+     */
+     MatrixTransform(const Vector3 &translate, const Vector3 &angles, const Vector3 &scale);
+
+
+};
+#endif  // __MATRIXROT_H__

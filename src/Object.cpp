@@ -6,7 +6,6 @@ Object::Object(const std::string name, const Vector3 &centerPosition,
                const Vector3 &scale)
     : Transform(), id{Object::HMO} {
     this->lenPointsPack = 0;
-
     this->scale[0][0] = scale[0];
     this->scale[1][1] = scale[1];
     this->scale[2][2] = scale[2];
@@ -19,9 +18,6 @@ Object::Object(const std::string name, const Vector3 &centerPosition,
         throw std::logic_error("Cannot read object file! " + std::string(DATA_FOLDER) + name);
     }
     readFile.close();
-    // std::cout   << "Loaded " << this->CountPoints() << " actualPoints " 
-    //             << "from " << DATA_FOLDER  + name <<std::endl;
-
 
     this->originPoints = std::vector<Vector3>(this->actualPoints.size(), Vector3());
     this->originPoints = this->actualPoints;
@@ -29,7 +25,6 @@ Object::Object(const std::string name, const Vector3 &centerPosition,
     ++Object::HMO;
     this->name = std::to_string(this->id) + "_" + name;
     this->Translate(centerPosition);
-    // this->Update();
 }
 
 Object::Object(const Object &obj): id{Object::HMO} {
@@ -77,30 +72,33 @@ void Object::Save(){
 
 void Object::Translate(const Vector3 &v) {
     this->position += v;
-    // for(auto &x : this->actualPoints)
-    //     x += position;
 }
 
 void Object::Rotate(const double &angle, const Vector3 &v) {
-    MatrixRot rotM(angle, v);
-    this->rotation = rotM * this->rotation;
-    // for(auto &x: this->actualPoints)
-    //     x = this->rotation * x;
-}
-
-void Object::Rotate(const MatrixRot &M) {
-    this->rotation = M * this->rotation;
-    // for(auto &x: this->actualPoints)
-    //     x = this->rotation * x ;
+    if(v != VectorX && v != VectorY && v != VectorZ)
+        throw std::logic_error("Cannot rotate");
+    this->eulerAngles += v * angle;
+    this->rotation = this->rotation * MatrixRot(angle, v);
 }
 
 std::vector<Vector3> Object::OriginPoints() const{
     return this->originPoints;
 }
+
 void Object::Update(){
     this->actualPoints = this->originPoints;
-    for (auto &x : this->actualPoints)
-         x =  this->scale * this->rotation * x  + this->position;
+    // MatrixTransform M(this->position, this->eulerAngles, this->scale);
+
+    // for (auto &x : this->actualPoints){
+    //     Vector4 y({x[0], x[1], x[2], 1});
+    //     y = M * y;
+    //     x = Vector3({y[0], y[1], y[2]});
+    // }
+
+    for (auto &x : this->actualPoints){
+        x = this->scale * this->rotation * x;
+        x += this->position;
+    }
     this->Save();
 }
 

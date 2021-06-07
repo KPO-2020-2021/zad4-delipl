@@ -1,9 +1,11 @@
 #ifndef __OBJECT_HPP__
 #define __OBJECT_HPP__
-#include "Matrixes.hpp"
 #include <iostream>
+#include <memory>
 #include <string>
 #include <vector>
+
+#include "Matrixes.hpp"
 /**
  * @file
  * Describes Transform Class and Object Class
@@ -17,7 +19,7 @@ struct Transform{
         /**
          * @brief Pinned Transform
          */
-        Transform *pinned;
+        std::shared_ptr<Transform> pinned;
 
         /**
          * @brief Center position
@@ -25,9 +27,14 @@ struct Transform{
         Vector3 position;
 
         /**
-         * @brief Rotation 
+         * @brief Rotation Matrix
          */
         MatrixRot rotation;
+
+        /**
+         * @brief Euler angles in 3 axis
+         */
+        Vector3 eulerAngles;
 
         /**
          * @brief Scale as a unit matrix
@@ -38,12 +45,11 @@ struct Transform{
          * @brief Construct a new Transform object
          */
         Transform(){
-            pinned = nullptr;
-            position    = Vector3();
-            rotation    = MatrixRot();
-            scale       = MatrixRot();
-            for (std::size_t i = 0; i < 3; ++i)
-                scale[i][i] = 1;
+            this->pinned = nullptr;
+            this->position    = Vector3();
+            this->rotation    = MatrixRot();
+            this->scale       = MatrixRot();
+            this->eulerAngles = Vector3();
         }
 };
 /**
@@ -146,12 +152,6 @@ class Object: public Transform{
          * @param v Vector3 of axis rotation
          */
         virtual void Rotate(const double &angle, const Vector3 &v);
-
-        /**
-         * @brief Rotates every point from \a actualPoints and \a transform of Object
-         * @param M rotation matrix
-         */
-        virtual void Rotate(const MatrixRot &M = MatrixRot());
 
         /**
          * @brief Read origin points
