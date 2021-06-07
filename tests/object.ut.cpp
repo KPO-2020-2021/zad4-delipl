@@ -1,17 +1,19 @@
-#include "doctest.h"
-#include <fstream>
 #include "config.hpp"
 #include "Object.hpp"
 
-TEST_CASE("1. Transform constructor"){
+#include <fstream>
+
+#include "doctest.h"
+
+TEST_CASE("1. Transform constructor") {
     CHECK_NOTHROW(Transform trans);
     Transform trans;
     CHECK(trans.position == Vector3());
     CHECK(trans.rotation == MatrixRot());
     // CHECK(trans.pinned == nullptr);
-    CHECK(trans.scale == Vector3({1, 1, 1}));
+    CHECK(trans.scale == MatrixRot());
 }
-TEST_CASE("2. Object constriuctor, open file and read data"){
+TEST_CASE("2. Object constriuctor, open file and read data") {
     CHECK_NOTHROW(Object rect("prostokat.dat"));
     Object rect("prostokat.dat");
     std::cout << rect << std::endl;
@@ -33,8 +35,7 @@ TEST_CASE("2. Object constriuctor, open file and read data"){
     CHECK(rect2[3] == Vector3({60, 160, 60}));
 }
 
-
-TEST_CASE("4. Object 8 actualPoints rotate"){
+TEST_CASE("4. Object 8 actualPoints rotate") {
     CHECK_NOTHROW(Object rect("prostopadloscian.dat"));
     Object rect("prostokat.dat");
     rect.Rotate(0, VectorZ);
@@ -48,8 +49,6 @@ TEST_CASE("4. Object 8 actualPoints rotate"){
     rect.Rotate(-90, VectorZ);
     rect.Update();
     CHECK(rect[0] == Vector3({60, 60, 60}));
-
-    
 
     rect.Rotate(-90, VectorZ);
     rect.Update();
@@ -66,8 +65,7 @@ TEST_CASE("4. Object 8 actualPoints rotate"){
 
     rect1.Rotate(-90, VectorX);
     rect1.Update();
-    CHECK(rect1[0] == Vector3({0, 0, -100}));
-
+    CHECK(rect1[0] == Vector3({0, -100, 0}));
 
     Object line("line.dat");
     line.Rotate(90, VectorX);
@@ -80,11 +78,10 @@ TEST_CASE("4. Object 8 actualPoints rotate"){
 
     line.Rotate(90, VectorX);
     line.Update();
-    CHECK(line[0] == Vector3({0, 0, -100}));
+    CHECK(line[0] == Vector3({0, 100, 0}));
 }
 
-
-TEST_CASE("10. Object ID"){
+TEST_CASE("10. Object ID") {
     CHECK(Object::HowManyObjects() == 0);
     Object rect1("line.dat");
     CHECK(Object::HowManyObjects() == 1);
@@ -103,7 +100,6 @@ TEST_CASE("10. Object ID"){
 //     Object obj("line.dat");
 //     Object obj1("line.dat");
 //     std::ifstream tmpFile(std::string(TMP_FOLDER + obj.Name()));
-
 
 //     tmpFile >> obj1;
 
